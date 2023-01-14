@@ -336,7 +336,7 @@ console.log(svelteComponent)
 
 Yields:
 
-```txt
+```text
 [class Component extends SvelteComponent]
 ```
 
