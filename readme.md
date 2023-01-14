@@ -214,8 +214,7 @@ Create a development element (TypeScript type).
 *   `source` ([`Source`][source])
     — info about source
 *   `self` (`undefined`)
-    — nothing (this is used by frameworks that have components, those are not
-    present in hast)
+    — nothing (this is used by frameworks that have components, we don’t)
 
 ###### Returns
 
