@@ -1,6 +1,6 @@
 {
   "name": "hast-util-to-jsx-runtime",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "hast utility to transform to preact, react, solid, svelte, vue, etc",
   "license": "MIT",
   "keywords": [

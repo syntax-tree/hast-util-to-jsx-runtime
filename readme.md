@@ -68,14 +68,14 @@ npm install hast-util-to-jsx-runtime
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {toJsxRuntime} from "https://esm.sh/hast-util-to-jsx-runtime@0"
+import {toJsxRuntime} from "https://esm.sh/hast-util-to-jsx-runtime@1"
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {toJsxRuntime} from "https://esm.sh/hast-util-to-jsx-runtime@0?bundle"
+  import {toJsxRuntime} from "https://esm.sh/hast-util-to-jsx-runtime@1?bundle"
 </script>
 ```
 
