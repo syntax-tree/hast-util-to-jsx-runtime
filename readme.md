@@ -390,21 +390,21 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://github.com/syntax-tree/hast-util-from-html/workflows/main/badge.svg
+[build-badge]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/workflows/main/badge.svg
 
-[build]: https://github.com/syntax-tree/hast-util-from-html/actions
+[build]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/actions
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-from-html.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-jsx-runtime.svg
 
-[coverage]: https://codecov.io/github/syntax-tree/hast-util-from-html
+[coverage]: https://codecov.io/github/syntax-tree/hast-util-to-jsx-runtime
 
-[downloads-badge]: https://img.shields.io/npm/dm/hast-util-from-html.svg
+[downloads-badge]: https://img.shields.io/npm/dm/hast-util-to-jsx-runtime.svg
 
-[downloads]: https://www.npmjs.com/package/hast-util-from-html
+[downloads]: https://www.npmjs.com/package/hast-util-to-jsx-runtime
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-from-html.svg
+[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-jsx-runtime.svg
 
-[size]: https://bundlephobia.com/result?p=hast-util-from-html
+[size]: https://bundlephobia.com/result?p=hast-util-to-jsx-runtime
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
