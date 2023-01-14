@@ -353,6 +353,11 @@ It exports the additional types [`Fragment`][fragment], [`Jsx`][jsx],
 [`JsxDev`][jsxdev], [`Options`][options], [`Props`][props], [`Source`][source],
 and [`Space`][Space].
 
+The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
+namespace has to by typed.
+Typically this is done by installing your frameworks types (e.g.,
+`@types/react`), which you likely already have.
+
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
