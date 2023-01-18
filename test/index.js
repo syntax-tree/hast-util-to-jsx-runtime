@@ -401,3 +401,38 @@ test('components', () => {
     'should support class components'
   )
 })
+
+test('react specific: filter whitespace in tables', () => {
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(
+        h(null, [
+          h('table', [
+            ' ',
+            h('thead', [
+              ' ',
+              h('tr', [' ', h('th', [' ', h('b', 'a'), ' ']), ' ']),
+              ' '
+            ]),
+            ' ',
+            h('tbody', [
+              ' ',
+              h('tr', [' ', h('td', [' ', h('b', 'b'), ' ']), ' ']),
+              ' '
+            ]),
+            ' ',
+            h('tfoot', [
+              ' ',
+              h('tr', [' ', h('td', [' ', h('b', 'c'), ' ']), ' ']),
+              ' '
+            ]),
+            ' '
+          ])
+        ]),
+        production
+      )
+    ),
+    '<table><thead><tr><th> <b>a</b> </th></tr></thead><tbody><tr><td> <b>b</b> </td></tr></tbody><tfoot><tr><td> <b>c</b> </td></tr></tfoot></table>',
+    'should ignore whitespace in `table`, `thead`, `tbody`, `tfoot`, and `tr`'
+  )
+})
