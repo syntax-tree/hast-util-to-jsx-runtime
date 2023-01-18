@@ -232,7 +232,7 @@ Create a production element (TypeScript type).
 *   `type` (`unknown`)
     — element type: `Fragment` symbol, tag name (`string`), component
 *   `props` ([`Props`][props])
-    — element props and also includes `children`
+    — element props, `children`, and maybe `node`
 *   `key` (`string` or `undefined`)
     — dynamicly generated key to use
 
@@ -249,7 +249,7 @@ Create a development element (TypeScript type).
 *   `type` (`unknown`)
     — element type: `Fragment` symbol, tag name (`string`), component
 *   `props` ([`Props`][props])
-    — element props and also includes `children`
+    — element props, `children`, and maybe `node`
 *   `key` (`string` or `undefined`)
     — dynamicly generated key to use
 *   `isStaticChildren` (`boolean`)
@@ -270,14 +270,19 @@ Properties and children (TypeScript type).
 ###### Type
 
 ```ts
+import type {Element} from 'hast'
+
 type Props = {
-  children: Array<JSX.Element | string>
   [prop: string]:
+    | Element // For `node`.
+    | Array<JSX.Element | string | null | undefined> // For `children`.
+    | Record<string, string> // For `style`.
     | string
     | number
     | boolean
-    | Record<string, string> // For `style`.
-    | Array<JSX.Element | string> // For `children`.
+    | undefined
+  children: Array<JSX.Element | string | null | undefined>
+  node?: Element | undefined
 }
 ```
 
