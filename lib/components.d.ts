@@ -48,8 +48,9 @@ export type Component<ComponentProps> =
  *
  * You can access props at `JSX.IntrinsicElements`.
  * For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
-
  */
+// Note: this type has to be in `.ts` or `.d.ts`, otherwise TSC hardcodes
+// react into the `.d.ts` file.
 export type Components = {
   [TagName in keyof JSX.IntrinsicElements]:
     | Component<JSX.IntrinsicElements[TagName]>
