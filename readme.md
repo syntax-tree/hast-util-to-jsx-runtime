@@ -20,6 +20,7 @@ with an automatic JSX runtime.
 *   [API](#api)
     *   [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
     *   [`Options`](#options)
+    *   [`Components`](#components-1)
     *   [`Fragment`](#fragment-1)
     *   [`Jsx`](#jsx-1)
     *   [`JsxDev`](#jsxdev-1)
@@ -143,6 +144,13 @@ Static JSX ([`Jsx`][jsx], required in production).
 
 Development JSX ([`JsxDev`][jsxdev], required in development).
 
+###### `components`
+
+Components to use ([`Partial<Components>`][components], optional).
+
+Each key is the name of an HTML (or SVG) element to override.
+The value is the component to render instead.
+
 ###### `development`
 
 Whether to use `jsxDEV` when on or `jsx` and `jsxs` when off (`boolean`,
@@ -169,6 +177,33 @@ it.
 > It does not support the features available in XML.
 > Passing SVG might break but fragments of modern SVG should be fine.
 > Use `xast` if you need to support SVG as XML.
+
+### `Components`
+
+Possible components to use (TypeScript type).
+
+Each key is a tag name typed in `JSX.IntrinsicElements`.
+Each value is a component accepting the corresponding props or a different tag
+name.
+
+You can access props at `JSX.IntrinsicElements`.
+For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
+
+###### Type
+
+```ts
+type Components = {
+  [TagName in keyof JSX.IntrinsicElements]:
+    | Component<JSX.IntrinsicElements[TagName]>
+    | keyof JSX.IntrinsicElements
+}
+
+type Component<ComponentProps> =
+  // Function component:
+  | ((props: ComponentProps) => JSX.Element | string | null | undefined)
+  // Class component:
+  | (new (props: ComponentProps) => JSX.ElementClass)
+```
 
 ### `Fragment`
 
@@ -348,9 +383,9 @@ followed by browsers such as Chrome, Firefox, and Safari.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Fragment`][fragment], [`Jsx`][jsx],
-[`JsxDev`][jsxdev], [`Options`][options], [`Props`][props], [`Source`][source],
-and [`Space`][Space].
+It exports the additional types [`Components`][components],
+[`Fragment`][fragment], [`Jsx`][jsx], [`JsxDev`][jsxdev], [`Options`][options],
+[`Props`][props], [`Source`][source], and [`Space`][Space].
 
 The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
 namespace has to by typed.
@@ -463,3 +498,5 @@ abide by its terms.
 [source]: #source
 
 [space]: #space-1
+
+[components]: #components-1

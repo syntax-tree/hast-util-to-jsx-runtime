@@ -7,6 +7,7 @@
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import React from 'react'
 import * as prod from 'react/jsx-runtime'
 import * as dev from 'react/jsx-dev-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
@@ -255,6 +256,7 @@ test('properties', () => {
     'should support properties in the SVG space'
   )
 })
+
 test('children', () => {
   assert.equal(
     renderToStaticMarkup(toJsxRuntime(h('a'), production)),
@@ -353,4 +355,49 @@ test('source', () => {
     const source = /** @type {Source | undefined} */ (node._source)
     return source
   }
+})
+
+test('components', () => {
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(h('b#x'), {
+        ...production,
+        components: {
+          b(props) {
+            // Note: types for this are working.
+            assert(props.id === 'x')
+            return 'a'
+          }
+        }
+      })
+    ),
+    'a',
+    'should support function components'
+  )
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(h('b#x'), {
+        ...production,
+        components: {
+          b: class extends React.Component {
+            /**
+             * @param {JSX.IntrinsicElements['b']} props
+             */
+            constructor(props) {
+              super(props)
+              // Note: types for this are working.
+              assert(props.id === 'x')
+            }
+
+            render() {
+              return 'a'
+            }
+          }
+        }
+      })
+    ),
+    'a',
+    'should support class components'
+  )
 })

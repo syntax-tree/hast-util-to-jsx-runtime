@@ -4,3 +4,4 @@
 coverage/
 node_modules/
 yarn.lock
+!lib/components.d.ts

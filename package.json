@@ -80,6 +80,7 @@
     "prettier": true,
     "#": "`n` is wrong",
     "rules": {
+      "@typescript-eslint/ban-types": "off",
       "n/file-extension-in-import": "off"
     }
   },
