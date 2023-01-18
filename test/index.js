@@ -400,6 +400,39 @@ test('components', () => {
     'a',
     'should support class components'
   )
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(h('b'), {
+        ...production,
+        passNode: true,
+        components: {
+          b(props) {
+            assert.ok(props.node)
+            return 'a'
+          }
+        }
+      })
+    ),
+    'a',
+    'should support components w/ `passNode: true`'
+  )
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(h('b'), {
+        ...production,
+        components: {
+          b(props) {
+            assert.equal(props.node, undefined)
+            return 'a'
+          }
+        }
+      })
+    ),
+    'a',
+    'should support components w/o `passNode`'
+  )
 })
 
 test('react specific: filter whitespace in tables', () => {

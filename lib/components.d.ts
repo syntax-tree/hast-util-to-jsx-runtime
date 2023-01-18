@@ -1,3 +1,5 @@
+import type {Element} from 'hast'
+
 /**
  * Basic functional component: given props, returns an element.
  *
@@ -39,12 +41,14 @@ export type Component<ComponentProps> =
   | FunctionComponent<ComponentProps>
   | ClassComponent<ComponentProps>
 
+export type ExtraProps = {node?: Element | undefined}
+
 /**
  * Possible components to use.
  *
  * Each key is a tag name typed in `JSX.IntrinsicElements`.
- * Each value is a component accepting the corresponding props or a different
- * tag name.
+ * Each value is either a different tag name, or a component accepting the
+ * corresponding props (and an optional `node` prop if `passNode` is on).
  *
  * You can access props at `JSX.IntrinsicElements`.
  * For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
@@ -53,6 +57,6 @@ export type Component<ComponentProps> =
 // react into the `.d.ts` file.
 export type Components = {
   [TagName in keyof JSX.IntrinsicElements]:
-    | Component<JSX.IntrinsicElements[TagName]>
+    | Component<JSX.IntrinsicElements[TagName] & ExtraProps>
     | keyof JSX.IntrinsicElements
 }

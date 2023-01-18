@@ -144,6 +144,11 @@ Static JSX ([`Jsx`][jsx], required in production).
 
 Development JSX ([`JsxDev`][jsxdev], required in development).
 
+###### `development`
+
+Whether to use `jsxDEV` when on or `jsx` and `jsxs` when off (`boolean`,
+default: `false`).
+
 ###### `components`
 
 Components to use ([`Partial<Components>`][components], optional).
@@ -151,17 +156,16 @@ Components to use ([`Partial<Components>`][components], optional).
 Each key is the name of an HTML (or SVG) element to override.
 The value is the component to render instead.
 
-###### `development`
-
-Whether to use `jsxDEV` when on or `jsx` and `jsxs` when off (`boolean`,
-default: `false`).
-
 ###### `filePath`
 
 File path to the original source file (`string`, optional).
 
 Passed in source info to `jsxDEV` when using the automatic runtime with
 `development: true`.
+
+###### `passNode`
+
+Pass the hast element node to components (`boolean`, default: `false`).
 
 ###### `space`
 
@@ -183,8 +187,8 @@ it.
 Possible components to use (TypeScript type).
 
 Each key is a tag name typed in `JSX.IntrinsicElements`.
-Each value is a component accepting the corresponding props or a different tag
-name.
+Each value is either a different tag name, or a component accepting the
+corresponding props (and an optional `node` prop if `passNode` is on).
 
 You can access props at `JSX.IntrinsicElements`.
 For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
@@ -192,11 +196,15 @@ For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
 ###### Type
 
 ```ts
+import type {Element} from 'hast'
+
 type Components = {
   [TagName in keyof JSX.IntrinsicElements]:
-    | Component<JSX.IntrinsicElements[TagName]>
+    | Component<JSX.IntrinsicElements[TagName] & ExtraProps>
     | keyof JSX.IntrinsicElements
 }
+
+type ExtraProps = {node?: Element | undefined}
 
 type Component<ComponentProps> =
   // Function component:
@@ -222,7 +230,7 @@ Create a production element (TypeScript type).
 ###### Parameters
 
 *   `type` (`unknown`)
-    — element type: the `Fragment` symbol or a tag name (`string`)
+    — element type: `Fragment` symbol, tag name (`string`), component
 *   `props` ([`Props`][props])
     — element props and also includes `children`
 *   `key` (`string` or `undefined`)
@@ -239,7 +247,7 @@ Create a development element (TypeScript type).
 ###### Parameters
 
 *   `type` (`unknown`)
-    — element type: the `Fragment` symbol or a tag name (`string`)
+    — element type: `Fragment` symbol, tag name (`string`), component
 *   `props` ([`Props`][props])
     — element props and also includes `children`
 *   `key` (`string` or `undefined`)
