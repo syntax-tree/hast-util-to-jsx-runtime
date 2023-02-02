@@ -21,6 +21,7 @@ with an automatic JSX runtime.
     *   [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
     *   [`Options`](#options)
     *   [`Components`](#components-1)
+    *   [`ElementAttributeNameCase`](#elementattributenamecase-1)
     *   [`Fragment`](#fragment-1)
     *   [`Jsx`](#jsx-1)
     *   [`JsxDev`](#jsxdev-1)
@@ -163,6 +164,11 @@ File path to the original source file (`string`, optional).
 Passed in source info to `jsxDEV` when using the automatic runtime with
 `development: true`.
 
+###### `elementAttributeNameCase`
+
+Specify casing to use for attribute names
+([`ElementAttributeNameCase`][elementattributenamecase], default: `'react'`).
+
 ###### `passNode`
 
 Pass the hast element node to components (`boolean`, default: `false`).
@@ -211,6 +217,19 @@ type Component<ComponentProps> =
   | ((props: ComponentProps) => JSX.Element | string | null | undefined)
   // Class component:
   | (new (props: ComponentProps) => JSX.ElementClass)
+```
+
+### `ElementAttributeNameCase`
+
+Specify casing to use for attribute names (TypeScript type).
+
+React casing is for example `className`, `strokeLinecap`, `xmlLang`.
+HTML casing is for example `class`, `stroke-linecap`, `xml:lang`.
+
+###### Type
+
+```ts
+type ElementAttributeNameCase = 'react' | 'html'
 ```
 
 ### `Fragment`
@@ -281,7 +300,7 @@ type Props = {
     | number
     | boolean
     | undefined
-  children: Array<JSX.Element | string | null | undefined>
+  children: Array<JSX.Element | string | null | undefined> | undefined
   node?: Element | undefined
 }
 ```
@@ -397,6 +416,7 @@ followed by browsers such as Chrome, Firefox, and Safari.
 
 This package is fully typed with [TypeScript][].
 It exports the additional types [`Components`][components],
+[`ElementAttributeNameCase`][elementattributenamecase],
 [`Fragment`][fragment], [`Jsx`][jsx], [`JsxDev`][jsxdev], [`Options`][options],
 [`Props`][props], [`Source`][source], and [`Space`][Space].
 
@@ -513,3 +533,5 @@ abide by its terms.
 [space]: #space-1
 
 [components]: #components-1
+
+[elementattributenamecase]: #elementattributenamecase-1
