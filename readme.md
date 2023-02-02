@@ -104,7 +104,7 @@ Yields:
 
 ## API
 
-This package exports the identifier [`toJsxRuntime`][tojsxruntime].
+This package exports the identifier [`toJsxRuntime`][api-to-jsx-runtime].
 There is no default export.
 
 ### `toJsxRuntime(tree, options)`
@@ -116,7 +116,7 @@ automatic JSX runtime.
 
 *   `tree` ([`Node`][node])
     — tree to transform
-*   `options` ([`Options`][options], required)
+*   `options` ([`Options`][api-options], required)
     — configuration
 
 ###### Returns
@@ -131,19 +131,19 @@ Configuration (TypeScript type).
 
 ###### `Fragment`
 
-Fragment ([`Fragment`][fragment], required).
+Fragment ([`Fragment`][api-fragment], required).
 
 ###### `jsx`
 
-Dynamic JSX ([`Jsx`][jsx], required in production).
+Dynamic JSX ([`Jsx`][api-jsx], required in production).
 
 ###### `jsxs`
 
-Static JSX ([`Jsx`][jsx], required in production).
+Static JSX ([`Jsx`][api-jsx], required in production).
 
 ###### `jsxDEV`
 
-Development JSX ([`JsxDev`][jsxdev], required in development).
+Development JSX ([`JsxDev`][api-jsx-dev], required in development).
 
 ###### `development`
 
@@ -152,7 +152,7 @@ default: `false`).
 
 ###### `components`
 
-Components to use ([`Partial<Components>`][components], optional).
+Components to use ([`Partial<Components>`][api-components], optional).
 
 Each key is the name of an HTML (or SVG) element to override.
 The value is the component to render instead.
@@ -167,7 +167,8 @@ Passed in source info to `jsxDEV` when using the automatic runtime with
 ###### `elementAttributeNameCase`
 
 Specify casing to use for attribute names
-([`ElementAttributeNameCase`][elementattributenamecase], default: `'react'`).
+([`ElementAttributeNameCase`][api-element-attribute-name-case], default:
+`'react'`).
 
 ###### `passNode`
 
@@ -175,8 +176,8 @@ Pass the hast element node to components (`boolean`, default: `false`).
 
 ###### `space`
 
-Whether `tree` is in the `'html'` or `'svg'` space ([`Space`][space], default:
-`'html'`).
+Whether `tree` is in the `'html'` or `'svg'` space ([`Space`][api-space],
+default: `'html'`).
 
 When an `<svg>` element is found in the HTML space, this package already
 automatically switches to and from the SVG space when entering and exiting
@@ -250,7 +251,7 @@ Create a production element (TypeScript type).
 
 *   `type` (`unknown`)
     — element type: `Fragment` symbol, tag name (`string`), component
-*   `props` ([`Props`][props])
+*   `props` ([`Props`][api-props])
     — element props, `children`, and maybe `node`
 *   `key` (`string` or `undefined`)
     — dynamicly generated key to use
@@ -267,13 +268,13 @@ Create a development element (TypeScript type).
 
 *   `type` (`unknown`)
     — element type: `Fragment` symbol, tag name (`string`), component
-*   `props` ([`Props`][props])
+*   `props` ([`Props`][api-props])
     — element props, `children`, and maybe `node`
 *   `key` (`string` or `undefined`)
     — dynamicly generated key to use
 *   `isStaticChildren` (`boolean`)
     — whether more than one children are used
-*   `source` ([`Source`][source])
+*   `source` ([`Source`][api-source])
     — info about source
 *   `self` (`undefined`)
     — nothing (this is used by frameworks that have components, we don’t)
@@ -415,10 +416,11 @@ followed by browsers such as Chrome, Firefox, and Safari.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Components`][components],
-[`ElementAttributeNameCase`][elementattributenamecase],
-[`Fragment`][fragment], [`Jsx`][jsx], [`JsxDev`][jsxdev], [`Options`][options],
-[`Props`][props], [`Source`][source], and [`Space`][Space].
+It exports the additional types [`Components`][api-components],
+[`ElementAttributeNameCase`][api-element-attribute-name-case],
+[`Fragment`][api-fragment], [`Jsx`][api-jsx], [`JsxDev`][api-jsx-dev],
+[`Options`][api-options], [`Props`][api-props], [`Source`][api-source],
+and [`Space`][api-Space].
 
 The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
 namespace has to by typed.
@@ -516,22 +518,22 @@ abide by its terms.
 
 [jsx-runtime]: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
 
-[options]: #options
+[api-to-jsx-runtime]: #tojsxruntimetree-options
 
-[tojsxruntime]: #tojsxruntimetree-options
+[api-components]: #components-1
 
-[fragment]: #fragment-1
+[api-element-attribute-name-case]: #elementattributenamecase-1
 
-[jsx]: #jsx-1
+[api-fragment]: #fragment-1
 
-[jsxdev]: #jsxdev-1
+[api-jsx]: #jsx-1
 
-[props]: #props
+[api-jsx-dev]: #jsxdev-1
 
-[source]: #source
+[api-options]: #options
 
-[space]: #space-1
+[api-props]: #props
 
-[components]: #components-1
+[api-source]: #source
 
-[elementattributenamecase]: #elementattributenamecase-1
+[api-space]: #space-1
