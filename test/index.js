@@ -292,6 +292,12 @@ test('children', () => {
     '<div class="article"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle cx="120" cy="120" r="100"></circle></svg></div>',
     'should support svg in html'
   )
+
+  assert.equal(
+    renderToStaticMarkup(toJsxRuntime(h('hr'), production)),
+    '<hr/>',
+    'should support a void element'
+  )
 })
 
 test('source', () => {
