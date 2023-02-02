@@ -235,7 +235,7 @@ test('properties', () => {
           ...production,
           jsx(type, props) {
             foundProps = props
-            return production.jsx('div', {children: []}, undefined)
+            return production.jsx(type, {})
           },
           stylePropertyNameCase: 'css'
         }
@@ -248,7 +248,6 @@ test('properties', () => {
   assert.deepEqual(
     foundProps,
     {
-      children: undefined,
       style: {
         '-webkit-transform': 'rotate(0.01turn)',
         '--fg': '#0366d6',
