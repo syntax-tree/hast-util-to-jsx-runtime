@@ -8,6 +8,7 @@
  * @typedef {import('./lib/index.js').Props} Props
  * @typedef {import('./lib/index.js').Source} Source
  * @typedef {import('./lib/index.js').Space} Space
+ * @typedef {import('./lib/index.js').StylePropertyNameCase} StylePropertyNameCase
  */
 
 export {toJsxRuntime} from './lib/index.js'

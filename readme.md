@@ -28,6 +28,7 @@ with an automatic JSX runtime.
     *   [`Props`](#props)
     *   [`Source`](#source)
     *   [`Space`](#space-1)
+    *   [`StylePropertyNameCase`](#stylepropertynamecase-1)
 *   [Examples](#examples)
     *   [Example: Preact](#example-preact)
     *   [Example: Vue](#example-vue)
@@ -157,18 +158,18 @@ Components to use ([`Partial<Components>`][api-components], optional).
 Each key is the name of an HTML (or SVG) element to override.
 The value is the component to render instead.
 
+###### `elementAttributeNameCase`
+
+Specify casing to use for attribute names
+([`ElementAttributeNameCase`][api-element-attribute-name-case], default:
+`'react'`).
+
 ###### `filePath`
 
 File path to the original source file (`string`, optional).
 
 Passed in source info to `jsxDEV` when using the automatic runtime with
 `development: true`.
-
-###### `elementAttributeNameCase`
-
-Specify casing to use for attribute names
-([`ElementAttributeNameCase`][api-element-attribute-name-case], default:
-`'react'`).
 
 ###### `passNode`
 
@@ -188,6 +189,12 @@ it.
 > It does not support the features available in XML.
 > Passing SVG might break but fragments of modern SVG should be fine.
 > Use `xast` if you need to support SVG as XML.
+
+###### `stylePropertyNameCase`
+
+Specify casing to use for property names in `style` objects
+([`StylePropertyNameCase`][api-style-property-name-case], default:
+`'dom'`).
 
 ### `Components`
 
@@ -222,10 +229,10 @@ type Component<ComponentProps> =
 
 ### `ElementAttributeNameCase`
 
-Specify casing to use for attribute names (TypeScript type).
+Casing to use for attribute names (TypeScript type).
 
-React casing is for example `className`, `strokeLinecap`, `xmlLang`.
 HTML casing is for example `class`, `stroke-linecap`, `xml:lang`.
+React casing is for example `className`, `strokeLinecap`, `xmlLang`.
 
 ###### Type
 
@@ -329,6 +336,19 @@ Namespace (TypeScript type).
 type Space = 'html' | 'svg'
 ```
 
+### `StylePropertyNameCase`
+
+Casing to use for property names in `style` objects (TypeScript type).
+
+CSS casing is for example `background-color` and `-webkit-line-clamp`.
+DOM casing is for example `backgroundColor` and `WebkitLineClamp`.
+
+###### Type
+
+```ts
+type StylePropertyNameCase = 'dom' | 'css'
+```
+
 ## Examples
 
 ### Example: Preact
@@ -420,7 +440,8 @@ It exports the additional types [`Components`][api-components],
 [`ElementAttributeNameCase`][api-element-attribute-name-case],
 [`Fragment`][api-fragment], [`Jsx`][api-jsx], [`JsxDev`][api-jsx-dev],
 [`Options`][api-options], [`Props`][api-props], [`Source`][api-source],
-and [`Space`][api-Space].
+[`Space`][api-Space],
+and [`StylePropertyNameCase`][api-style-property-name-case].
 
 The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
 namespace has to by typed.
@@ -537,3 +558,5 @@ abide by its terms.
 [api-source]: #source
 
 [api-space]: #space-1
+
+[api-style-property-name-case]: #stylepropertynamecase-1

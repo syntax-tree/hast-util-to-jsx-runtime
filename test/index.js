@@ -182,6 +182,83 @@ test('properties', () => {
     'should support `style`'
   )
 
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(
+        {
+          type: 'element',
+          tagName: 'div',
+          // @ts-expect-error: style as object, normally not supported, but passed through here.
+          properties: {style: {color: 'red'}},
+          children: []
+        },
+        production
+      )
+    ),
+    '<div style="color:red"></div>',
+    'should support `style` as an object'
+  )
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(
+        h('div', {style: '-webkit-transform: rotate(0.01turn)'}),
+        production
+      )
+    ),
+    '<div style="-webkit-transform:rotate(0.01turn)"></div>',
+    'should support vendor prefixes'
+  )
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(
+        h('div', {style: '--fg: #0366d6; color: var(--fg)'}),
+        production
+      )
+    ),
+    '<div style="--fg:#0366d6;color:var(--fg)"></div>',
+    'should support CSS variables'
+  )
+
+  /** @type {unknown} */
+  let foundProps
+
+  assert.equal(
+    renderToStaticMarkup(
+      toJsxRuntime(
+        h('div', {
+          style:
+            '-webkit-transform:rotate(0.01turn); --fg: #0366d6; color: var(--fg); -ms-transition: unset'
+        }),
+        {
+          ...production,
+          jsx(type, props) {
+            foundProps = props
+            return production.jsx('div', {children: []}, undefined)
+          },
+          stylePropertyNameCase: 'css'
+        }
+      )
+    ),
+    '<div></div>',
+    'should support CSS cased style objects (1)'
+  )
+
+  assert.deepEqual(
+    foundProps,
+    {
+      children: undefined,
+      style: {
+        '-webkit-transform': 'rotate(0.01turn)',
+        '--fg': '#0366d6',
+        color: 'var(--fg)',
+        '-ms-transition': 'unset'
+      }
+    },
+    'should support CSS cased style objects (2)'
+  )
+
   assert.throws(
     () => {
       toJsxRuntime(h('div', {style: 'color:red; /*'}), production)
