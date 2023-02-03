@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf8>
+<title>React + hast-util-to-jsx-runtime</title>
+<link rel=stylesheet href=index.css />
+<h1><code>React</code> + <code>hast-util-to-jsx-runtime</code></h1>
+<p style="color:green">Note! This example is dynamic!</p>
+<div id=root></div>
+<script type=module>
+/* eslint-env browser */
+import {Fragment, jsx, jsxs} from 'https://esm.sh/react@18/jsx-runtime?dev'
+import React from 'https://esm.sh/react@18?dev'
+import ReactDom from 'https://esm.sh/react-dom@18/client?dev'
+import {toJsxRuntime} from './hast-util-to-jsx-runtime.min.js'
+import {createTree} from './create-tree.js'
+
+const root = ReactDom.createRoot(document.getElementById('root'))
+
+rerender()
+
+function rerender() {
+  root.render(React.createElement(Component))
+  setTimeout(rerender, 1000)
+}
+
+function Component() {
+  return toJsxRuntime(createTree(), {Fragment, jsx, jsxs})
+}
+</script>

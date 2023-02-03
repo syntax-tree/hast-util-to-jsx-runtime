@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf8>
+<title>Solid + hast-util-to-jsx-runtime</title>
+<link rel=stylesheet href=index.css />
+<h1><code>Solid</code> + <code>hast-util-to-jsx-runtime</code></h1>
+<p style="color:red">Note! This example is static! (to do: figure out a way to rerender Solid without changing everything?)</p>
+<div id=root></div>
+<script type=module>
+/* eslint-env browser */
+import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
+import {render} from 'https://esm.sh/solid-js@1/web?dev'
+import {toJsxRuntime} from './hast-util-to-jsx-runtime.min.js'
+import {createTree} from './create-tree.js'
+
+render(Component, document.getElementById('root'))
+
+function Component() {
+  return toJsxRuntime(createTree(), {Fragment, jsx, jsxs, passKeys: false, elementAttributeNameCase: 'html', stylePropertyNameCase: 'css'})
+}
+</script>

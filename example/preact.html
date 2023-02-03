@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf8>
+<title>preact + hast-util-to-jsx-runtime</title>
+<link rel=stylesheet href=index.css />
+<h1><code>preact</code> + <code>hast-util-to-jsx-runtime</code></h1>
+<p style="color:green">Note! This example is dynamic!</p>
+<div id=root></div>
+<script type=module>
+/* eslint-env browser */
+import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime?dev'
+import {render} from 'https://esm.sh/preact@10?dev'
+import {toJsxRuntime} from './hast-util-to-jsx-runtime.min.js'
+import {createTree} from './create-tree.js'
+
+rerender()
+
+function rerender() {
+  render(
+    toJsxRuntime(createTree(), {Fragment, jsx, jsxs, elementAttributeNameCase: 'html'}),
+    document.getElementById('root')
+  )
+  setTimeout(rerender, 1000)
+}
+</script>

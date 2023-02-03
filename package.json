@@ -51,6 +51,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "c8": "^7.0.0",
+    "esbuild": "^0.17.0",
     "hastscript": "^7.0.0",
     "prettier": "^2.0.0",
     "react": "^18.0.0",
@@ -63,11 +64,12 @@
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
+    "generate": "esbuild . --bundle --minify --target=es2020 --format=esm --outfile=example/hast-util-to-jsx-runtime.min.js",
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node --conditions development test/index.js",
     "test-coverage": "c8 --check-coverage --100 --reporter lcov npm run test-api",
-    "test": "npm run build && npm run format && npm run test-coverage"
+    "test": "npm run generate && npm run build && npm run format && npm run test-coverage"
   },
   "prettier": {
     "tabWidth": 2,
@@ -81,7 +83,6 @@
     "prettier": true,
     "#": "`n` is wrong",
     "rules": {
-      "@typescript-eslint/ban-types": "off",
       "n/file-extension-in-import": "off"
     }
   },
@@ -93,6 +94,9 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true
+    "strict": true,
+    "ignoreFiles": [
+      "example/**/*.js"
+    ]
   }
 }

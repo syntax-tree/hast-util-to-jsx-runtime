@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf8>
+<title>Vue + hast-util-to-jsx-runtime</title>
+<link rel=stylesheet href=index.css />
+<h1><code>Vue</code> + <code>hast-util-to-jsx-runtime</code></h1>
+<p style="color:red">Note! This example is static! (to do: figure out a way to rerender Vue)</p>
+<div id=root></div>
+<script type=module>
+/* eslint-env browser */
+import {Fragment, jsx, jsxs} from 'https://esm.sh/vue-jsx-runtime@0.1/jsx-runtime'
+import {createApp} from 'https://esm.sh/vue@3?dev'
+import {toJsxRuntime} from './hast-util-to-jsx-runtime.min.js'
+import {createTree} from './create-tree.js'
+
+createApp(Component).mount('#root')
+
+function Component() {
+  return toJsxRuntime(createTree(), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html'
+  })
+}
+</script>

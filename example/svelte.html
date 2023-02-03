@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf8>
+<title>Svelte + hast-util-to-jsx-runtime</title>
+<link rel=stylesheet href=index.css />
+<h1><code>Svelte</code> + <code>hast-util-to-jsx-runtime</code></h1>
+<p style="color:red">Note! This example is static! (to do: figure out a way to rerender Svelte)</p>
+<p style="color:red">Note! Svelte seems completely broken: no support for style, SVG, etc.</p>
+<div id=root></div>
+<script type=module>
+/* eslint-env browser */
+import {Fragment, jsx, jsxs} from 'https://esm.sh/svelte-jsx@2/jsx-runtime'
+import {toJsxRuntime} from './hast-util-to-jsx-runtime.min.js'
+import {createTree} from './create-tree.js'
+
+const Component = toJsxRuntime(createTree(), {Fragment, jsx, jsxs})
+
+new Component({target: document.getElementById('root')})
+</script>

@@ -85,10 +85,10 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {h} from 'hastscript'
-import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
+import {h} from 'hastscript'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 
 const tree = h('h1', 'Hello, world!')
 
@@ -280,7 +280,8 @@ Create a development element (TypeScript type).
 *   `key` (`string` or `undefined`)
     — dynamicly generated key to use
 *   `isStaticChildren` (`boolean`)
-    — whether more than one children are used
+    — whether two or more children are passed (in an array), which is whether
+    `jsxs` or `jsx` would be used
 *   `source` ([`Source`][api-source])
     — info about source
 *   `self` (`undefined`)
@@ -353,13 +354,24 @@ type StylePropertyNameCase = 'dom' | 'css'
 
 ### Example: Preact
 
+> 👉 **Note**: you must set `elementAttributeNameCase: 'html'` for preact.
+
+In Node.js, do:
+
 ```js
-import {h} from 'hastscript'
-import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import {Fragment, jsx, jsxs} from 'preact/jsx-runtime'
 import {render} from 'preact-render-to-string'
+import {h} from 'hastscript'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 
-const result = render(toJsxRuntime(h('h1', 'hi!'), {Fragment, jsx, jsxs}))
+const result = render(
+  toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html'
+  })
+)
 
 console.log(result)
 ```
@@ -370,17 +382,45 @@ Yields:
 <h1>hi!</h1>
 ```
 
-### Example: Vue
+In a browser, do:
 
 ```js
-import {h} from 'hastscript'
-import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
+import {render} from 'https://esm.sh/preact@10'
+import {h} from 'https://esm.sh/hastscript@7'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+
+render(
+  toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html'
+  }),
+  document.getElementById('root')
+)
+```
+
+### Example: Vue
+
+> 👉 **Note**: you must set `elementAttributeNameCase: 'html'` for Vue.
+
+In Node.js, do:
+
+```js
 import {Fragment, jsx, jsxs} from 'vue-jsx-runtime/jsx-runtime'
 import serverRenderer from '@vue/server-renderer'
+import {h} from 'hastscript'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 
 console.log(
   await serverRenderer.renderToString(
-    toJsxRuntime(h('h1', 'hi!'), {Fragment, jsx, jsxs})
+    toJsxRuntime(h('h1', 'hi!'), {
+      Fragment,
+      jsx,
+      jsxs,
+      elementAttributeNameCase: 'html'
+    })
   )
 )
 ```
@@ -391,14 +431,47 @@ Yields:
 <h1>hi!</h1>
 ```
 
-### Example: Solid
+In a browser, do:
 
 ```js
+import {createApp} from 'https://esm.sh/vue@3'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/vue-jsx-runtime@0.1/jsx-runtime'
+import {h} from 'https://esm.sh/hastscript@7'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+
+createApp(Component).mount('#root')
+
+function Component() {
+  return toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html'
+  })
+}
+```
+
+### Example: Solid
+
+> 👉 **Note**: you must set `elementAttributeNameCase: 'html'` and
+> `stylePropertyNameCase: 'css'` for Solid.
+
+In Node.js, do:
+
+```js
+import {Fragment, jsx, jsxs} from 'solid-jsx/jsx-runtime'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
-import {Fragment, jsx, jsxs} from 'solid-jsx/jsx-runtime'
 
-console.log(toJsxRuntime(h('h1', 'hi!'), {Fragment, jsx, jsxs}).t)
+console.log(
+  toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html',
+    stylePropertyNameCase: 'css'
+  }).t
+)
 ```
 
 Yields:
@@ -407,7 +480,30 @@ Yields:
 <h1 >hi!</h1>
 ```
 
+In a browser, do:
+
+```js
+import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
+import {render} from 'https://esm.sh/solid-js@1/web'
+import {h} from 'https://esm.sh/hastscript@7'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+
+render(Component, document.getElementById('root'))
+
+function Component() {
+  return toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html',
+    stylePropertyNameCase: 'css'
+  })
+}
+```
+
 ### Example: Svelte
+
+<!-- To do: improve svelte when it fixes a bunch of bugs. -->
 
 I have no clue how to render a Svelte component in Node, but you can get that
 component with:
