@@ -20,15 +20,15 @@ with an automatic JSX runtime.
 *   [API](#api)
     *   [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
     *   [`Options`](#options)
-    *   [`Components`](#components-1)
-    *   [`ElementAttributeNameCase`](#elementattributenamecase-1)
-    *   [`Fragment`](#fragment-1)
-    *   [`Jsx`](#jsx-1)
-    *   [`JsxDev`](#jsxdev-1)
+    *   [`Components`](#components)
+    *   [`ElementAttributeNameCase`](#elementattributenamecase)
+    *   [`Fragment`](#fragment)
+    *   [`Jsx`](#jsx)
+    *   [`JsxDev`](#jsxdev)
     *   [`Props`](#props)
     *   [`Source`](#source)
-    *   [`Space`](#space-1)
-    *   [`StylePropertyNameCase`](#stylepropertynamecase-1)
+    *   [`Space`](#space)
+    *   [`StylePropertyNameCase`](#stylepropertynamecase)
 *   [Examples](#examples)
     *   [Example: Preact](#example-preact)
     *   [Example: Vue](#example-vue)
@@ -128,73 +128,37 @@ Result from your configured JSX runtime (`JSX.Element`).
 
 Configuration (TypeScript type).
 
-##### Fields
+###### Fields
 
-###### `Fragment`
-
-Fragment ([`Fragment`][api-fragment], required).
-
-###### `jsx`
-
-Dynamic JSX ([`Jsx`][api-jsx], required in production).
-
-###### `jsxs`
-
-Static JSX ([`Jsx`][api-jsx], required in production).
-
-###### `jsxDEV`
-
-Development JSX ([`JsxDev`][api-jsx-dev], required in development).
-
-###### `development`
-
-Whether to use `jsxDEV` when on or `jsx` and `jsxs` when off (`boolean`,
-default: `false`).
-
-###### `components`
-
-Components to use ([`Partial<Components>`][api-components], optional).
-
-Each key is the name of an HTML (or SVG) element to override.
-The value is the component to render instead.
-
-###### `elementAttributeNameCase`
-
-Specify casing to use for attribute names
-([`ElementAttributeNameCase`][api-element-attribute-name-case], default:
-`'react'`).
-
-###### `filePath`
-
-File path to the original source file (`string`, optional).
-
-Passed in source info to `jsxDEV` when using the automatic runtime with
-`development: true`.
-
-###### `passNode`
-
-Pass the hast element node to components (`boolean`, default: `false`).
-
-###### `space`
-
-Whether `tree` is in the `'html'` or `'svg'` space ([`Space`][api-space],
-default: `'html'`).
-
-When an `<svg>` element is found in the HTML space, this package already
-automatically switches to and from the SVG space when entering and exiting
-it.
-
-> 👉 **Note**: hast is not XML.
-> It supports SVG as embedded in HTML.
-> It does not support the features available in XML.
-> Passing SVG might break but fragments of modern SVG should be fine.
-> Use `xast` if you need to support SVG as XML.
-
-###### `stylePropertyNameCase`
-
-Specify casing to use for property names in `style` objects
-([`StylePropertyNameCase`][api-style-property-name-case], default:
-`'dom'`).
+*   `Fragment` ([`Fragment`][api-fragment], required)
+    — fragment
+*   `jsx` ([`Jsx`][api-jsx], required in production)
+    — dynamic JSX
+*   `jsxs` ([`Jsx`][api-jsx], required in production)
+    — static JSX
+*   `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
+    — development JSX
+*   `development` (`boolean`, default: `false`)
+    — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
+*   `components` ([`Partial<Components>`][api-components], optional)
+    — components to use
+*   `elementAttributeNameCase`
+    ([`ElementAttributeNameCase`][api-element-attribute-name-case],
+    default: `'react'`)
+    — specify casing to use for attribute names
+*   `filePath` (`string`, optional)
+    — file path to the original source file, passed in source info to `jsxDEV`
+    when using the automatic runtime with `development: true`
+*   `passNode` (`boolean`, default: `false`)
+    — pass the hast element node to components
+*   `space` ([`Space`][api-space], default: `'html'`)
+    — whether `tree` is in the `'html'` or `'svg'` space, when an `<svg>`
+    element is found in the HTML space, this package already automatically
+    switches to and from the SVG space when entering and exiting it
+*   `stylePropertyNameCase`
+    ([`StylePropertyNameCase`][api-style-property-name-case],
+    default: `'dom'`)
+    — specify casing to use for property names in `style` objects
 
 ### `Components`
 
@@ -330,6 +294,12 @@ Info about source (TypeScript type).
 ### `Space`
 
 Namespace (TypeScript type).
+
+> 👉 **Note**: hast is not XML.
+> It supports SVG as embedded in HTML.
+> It does not support the features available in XML.
+> Passing SVG might break but fragments of modern SVG should be fine.
+> Use `xast` if you need to support SVG as XML.
 
 ###### Type
 
@@ -637,15 +607,15 @@ abide by its terms.
 
 [api-to-jsx-runtime]: #tojsxruntimetree-options
 
-[api-components]: #components-1
+[api-components]: #components
 
-[api-element-attribute-name-case]: #elementattributenamecase-1
+[api-element-attribute-name-case]: #elementattributenamecase
 
-[api-fragment]: #fragment-1
+[api-fragment]: #fragment
 
-[api-jsx]: #jsx-1
+[api-jsx]: #jsx
 
-[api-jsx-dev]: #jsxdev-1
+[api-jsx-dev]: #jsxdev
 
 [api-options]: #options
 
@@ -653,6 +623,6 @@ abide by its terms.
 
 [api-source]: #source
 
-[api-space]: #space-1
+[api-space]: #space
 
-[api-style-property-name-case]: #stylepropertynamecase-1
+[api-style-property-name-case]: #stylepropertynamecase
