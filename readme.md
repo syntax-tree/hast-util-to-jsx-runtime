@@ -378,7 +378,7 @@ render(
 In Node.js, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'vue-jsx-runtime/jsx-runtime'
+import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
 import serverRenderer from '@vue/server-renderer'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
