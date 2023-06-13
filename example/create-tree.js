@@ -193,6 +193,61 @@ export function createTree() {
         fill: '#0366d6'
       })
     ]),
+    h('h2', 'mathml'),
+    h('p', [
+      'You should see a formula that has 100% width, where the content is ',
+      'centered, and with a big blue border. ',
+      'There should also be visible whitespace between ',
+      h('code', '∀A'),
+      ' and ',
+      h('code', '∃P')
+    ]),
+    h(
+      'math',
+      {
+        xmlns: 'http://www.w3.org/1998/Math/MathML',
+        display: 'block',
+        className: ['mathml-class-works']
+      },
+      [
+        h(
+          'mrow',
+          h('mo', {rspace: '0'}, '∀'),
+          h('mi', 'A'),
+          h('mo', {lspace: '0.22em', rspace: '0'}, '∃'),
+          h('mi', 'P'),
+          h('mo', {lspace: '0.22em', rspace: '0'}, '∀'),
+          h('mi', 'B'),
+          h('mspace', {width: '0.17em'}),
+          h('mrow', [
+            h('mo', '['),
+            h('mrow', [
+              h('mi', 'B'),
+              h('mo', '∈'),
+              h('mi', 'P'),
+              h('mo', {lspace: '0.28em', rspace: '0.28em'}, '⟺'),
+              h('mo', {rspace: '0'}, '∀'),
+              h('mi', 'C'),
+              h('mspace', {width: '0.17em'}),
+              h('mrow', [
+                h('mo', '('),
+                h('mrow', [
+                  h('mi', 'C'),
+                  h('mo', '∈'),
+                  h('mi', 'B'),
+                  h('mo', '⇒'),
+                  h('mi', 'C'),
+                  h('mo', '∈'),
+                  h('mi', 'A')
+                ]),
+                h('mo', ')')
+              ])
+            ]),
+            h('mo', ']')
+          ])
+        )
+      ]
+    ),
     h('h2', 'xml:lang'),
     h('style', ':lang(fr) { color: #0366d6; }'),
     h('p', {xmlLang: 'fr'}, "C'est bleu ? Ensuite ça marche")

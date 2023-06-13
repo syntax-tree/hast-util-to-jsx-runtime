@@ -46,3 +46,8 @@ code {
     background-color: rgba(0, 0, 0, 0.4);
   }
 }
+
+.mathml-class-works {
+  border: 1ex solid #0366d6;
+  padding: 1ex;
+}
