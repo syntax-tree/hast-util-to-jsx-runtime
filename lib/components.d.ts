@@ -12,7 +12,6 @@ import type {Element} from 'hast'
  */
 export type FunctionComponent<ComponentProps> = (
   props: ComponentProps
-  // eslint-disable-next-line @typescript-eslint/ban-types
 ) => JSX.Element | string | null | undefined
 
 /**
@@ -39,9 +38,12 @@ export type ClassComponent<ComponentProps> = new (
  *   Props type.
  */
 export type Component<ComponentProps> =
-  | FunctionComponent<ComponentProps>
   | ClassComponent<ComponentProps>
+  | FunctionComponent<ComponentProps>
 
+/**
+ * Extra fields we pass.
+ */
 export type ExtraProps = {node?: Element | undefined}
 
 /**

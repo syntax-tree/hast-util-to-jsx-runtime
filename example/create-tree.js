@@ -6,7 +6,7 @@
 
 /* eslint-env browser */
 
-// @ts-expect-error: hush.
+// @ts-expect-error: TS in VS Code doesn’t seem to infer this.
 import * as hastscript from 'https://esm.sh/hastscript@7?dev'
 
 /** @type {typeof import('hastscript').h} */

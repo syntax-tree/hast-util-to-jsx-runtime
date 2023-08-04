@@ -94,6 +94,14 @@
     "strict": true
   },
   "xo": {
+    "overrides": [
+      {
+        "files": "**/*.ts",
+        "rules": {
+          "@typescript-eslint/ban-types": "off"
+        }
+      }
+    ],
     "prettier": true,
     "#": "`n` is wrong",
     "rules": {
