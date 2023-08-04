@@ -1,18 +1,19 @@
 /**
- * @typedef {import('../index.js').Fragment} Fragment
- * @typedef {import('../index.js').Jsx} Jsx
- * @typedef {import('../index.js').JsxDev} JsxDev
+ * @typedef {import('hast-util-to-jsx-runtime').Fragment} Fragment
+ * @typedef {import('hast-util-to-jsx-runtime').Jsx} Jsx
+ * @typedef {import('hast-util-to-jsx-runtime').JsxDev} JsxDev
+ *
  * @typedef {import('../lib/index.js').Source} Source
  */
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h, s} from 'hastscript'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import React from 'react'
 import * as dev from 'react/jsx-dev-runtime'
 import * as prod from 'react/jsx-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
-import {toJsxRuntime} from '../index.js'
 
 /** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */
 // @ts-expect-error: the react types are missing.
@@ -24,9 +25,10 @@ const development = {Fragment: dev.Fragment, jsxDEV: dev.jsxDEV}
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
-      'toJsxRuntime'
-    ])
+    assert.deepEqual(
+      Object.keys(await import('hast-util-to-jsx-runtime')).sort(),
+      ['toJsxRuntime']
+    )
   })
 
   await t.test(
