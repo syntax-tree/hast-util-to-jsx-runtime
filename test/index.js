@@ -106,7 +106,6 @@ test('core', () => {
   )
 
   assert.equal(
-    // @ts-expect-error: Types are out of date, `name` is no longer used.
     // type-coverage:ignore-next-line
     toJsxRuntime({type: 'doctype'}, production).type,
     production.Fragment,
@@ -114,7 +113,6 @@ test('core', () => {
   )
 
   assert.equal(
-    // @ts-expect-error: Types are out of date, `name` is no longer used.
     renderToStaticMarkup(toJsxRuntime({type: 'doctype'}, production)),
     '',
     'should support a doctype (2)'
@@ -262,7 +260,7 @@ test('properties', () => {
     () => {
       toJsxRuntime(h('div', {style: 'color:red; /*'}), production)
     },
-    /^1:1-1:1: Cannot parse style attribute: End of comment missing$/,
+    /Cannot parse `style` attribute/,
     'should crash on invalid style strings (default)'
   )
 
@@ -279,7 +277,7 @@ test('properties', () => {
         production
       )
     },
-    /^3:2-3:123: Cannot parse style attribute: End of comment missing$/,
+    /^3:2-3:123: Cannot parse `style` attribute/,
     'Cannot parse style attribute: End of comment missing'
   )
 
@@ -295,7 +293,7 @@ test('properties', () => {
         {...production, filePath: 'example.html'}
       )
     },
-    /^1:1-1:1: Cannot parse style attribute: End of comment missing$/,
+    /^1:1: Cannot parse `style` attribut/,
     'should crash on invalid style strings (w/ file path, w/o positional info)'
   )
 
@@ -312,7 +310,7 @@ test('properties', () => {
         {...production, filePath: 'example.html'}
       )
     },
-    /^3:2-3:123: Cannot parse style attribute: End of comment missing$/,
+    /^3:2-3:123: Cannot parse `style` attribute/,
     'should crash on invalid style strings (w/ file path, w/ positional info)'
   )
 

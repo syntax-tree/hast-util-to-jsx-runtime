@@ -113,16 +113,63 @@ There is no default export.
 Transform a hast tree to preact, react, solid, svelte, vue, etc., with an
 automatic JSX runtime.
 
-###### Parameters
+##### Parameters
 
 *   `tree` ([`Node`][node])
     — tree to transform
 *   `options` ([`Options`][api-options], required)
     — configuration
 
-###### Returns
+##### Returns
 
 Result from your configured JSX runtime (`JSX.Element`).
+
+##### Throws
+
+The following errors are thrown:
+
+###### ``Expected `Fragment` in options``
+
+This error is thrown when either `options` is not passed at all or
+when `options.Fragment` is `undefined`.
+
+The automatic JSX runtime needs a symbol for a fragment to work.
+
+To solve the error, make sure you are passing the correct fragment symbol from
+your framework.
+
+###### `` Expected `jsxDEV` in options when `development: true` ``
+
+This error is thrown when `options.development` is turned on (`true`), but when
+`options.jsxDEV` is not a function.
+
+The automatic JSX runtime, in development, needs this function.
+
+To solve the error, make sure you are importing the correct runtime functions
+(for example, `'react/jsx-dev-runtime'`), and pass `jsxDEV`.
+
+###### ``Expected `jsx` in production options``
+
+###### ``Expected `jsxs` in production options``
+
+These errors are thrown when `options.development` is *not* turned on (`false`
+or not defined), and when `options.jsx` or `options.jsxs` are not functions.
+
+The automatic JSX runtime, in production, needs these functions.
+
+To solve the error, make sure you are importing the correct runtime functions
+(for example, `'react/jsx-runtime'`), and pass `jsx` and `jsxs`.
+
+###### ``Cannot parse `style` attribute``
+
+This error is thrown when a `style` attribute is found on an element, which
+cannot be parsed as CSS.
+
+Most frameworks don’t accept `style` as a string, so we need to parse it as
+CSS, and pass it as an object.
+But when broken CSS is used, such as `style="color:red; /*"`, we crash.
+
+To solve the error, make sure authors write valid CSS.
 
 ### `Options`
 
