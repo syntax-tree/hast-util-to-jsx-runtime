@@ -62,7 +62,7 @@ development, and have guaranteed support for fragments.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-jsx-runtime
@@ -85,10 +85,10 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
-import {renderToStaticMarkup} from 'react-dom/server'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'react/jsx-runtime'
+import {renderToStaticMarkup} from 'react-dom/server'
 
 const tree = h('h1', 'Hello, world!')
 
@@ -185,10 +185,10 @@ Configuration (TypeScript type).
     — static JSX
 *   `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
     — development JSX
-*   `development` (`boolean`, default: `false`)
-    — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
 *   `components` ([`Partial<Components>`][api-components], optional)
     — components to use
+*   `development` (`boolean`, default: `false`)
+    — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
 *   `elementAttributeNameCase`
     ([`ElementAttributeNameCase`][api-element-attribute-name-case],
     default: `'react'`)
@@ -232,10 +232,10 @@ type Components = {
 type ExtraProps = {node?: Element | undefined}
 
 type Component<ComponentProps> =
-  // Function component:
-  | ((props: ComponentProps) => JSX.Element | string | null | undefined)
   // Class component:
   | (new (props: ComponentProps) => JSX.ElementClass)
+  // Function component:
+  | ((props: ComponentProps) => JSX.Element | string | null | undefined)
 ```
 
 ### `ElementAttributeNameCase`
@@ -248,7 +248,7 @@ React casing is for example `className`, `strokeLinecap`, `xmlLang`.
 ###### Type
 
 ```ts
-type ElementAttributeNameCase = 'react' | 'html'
+type ElementAttributeNameCase = 'html' | 'react'
 ```
 
 ### `Fragment`
@@ -313,12 +313,12 @@ import type {Element} from 'hast'
 
 type Props = {
   [prop: string]:
-    | Element // For `node`.
     | Array<JSX.Element | string | null | undefined> // For `children`.
     | Record<string, string> // For `style`.
-    | string
-    | number
+    | Element // For `node`.
     | boolean
+    | number
+    | string
     | undefined
   children: Array<JSX.Element | string | null | undefined> | undefined
   node?: Element | undefined
@@ -331,12 +331,12 @@ Info about source (TypeScript type).
 
 ###### Fields
 
+*   `columnNumber` (`number` or `undefined`)
+    — column where thing starts (0-indexed)
 *   `fileName` (`string` or `undefined`)
     — name of source file
 *   `lineNumber` (`number` or `undefined`)
     — line where thing starts (1-indexed)
-*   `columnNumber` (`number` or `undefined`)
-    — column where thing starts (0-indexed)
 
 ### `Space`
 
@@ -364,7 +364,7 @@ DOM casing is for example `backgroundColor` and `WebkitLineClamp`.
 ###### Type
 
 ```ts
-type StylePropertyNameCase = 'dom' | 'css'
+type StylePropertyNameCase = 'css' | 'dom'
 ```
 
 ## Examples
@@ -376,10 +376,10 @@ type StylePropertyNameCase = 'dom' | 'css'
 In Node.js, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'preact/jsx-runtime'
-import {render} from 'preact-render-to-string'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'preact/jsx-runtime'
+import {render} from 'preact-render-to-string'
 
 const result = render(
   toJsxRuntime(h('h1', 'hi!'), {
@@ -402,10 +402,10 @@ Yields:
 In a browser, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
-import {render} from 'https://esm.sh/preact@10'
 import {h} from 'https://esm.sh/hastscript@7'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
+import {render} from 'https://esm.sh/preact@10'
 
 render(
   toJsxRuntime(h('h1', 'hi!'), {
@@ -425,10 +425,10 @@ render(
 In Node.js, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
 import serverRenderer from '@vue/server-renderer'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
 
 console.log(
   await serverRenderer.renderToString(
@@ -451,10 +451,10 @@ Yields:
 In a browser, do:
 
 ```js
-import {createApp} from 'https://esm.sh/vue@3'
-import {Fragment, jsx, jsxs} from 'https://esm.sh/vue-jsx-runtime@0.1/jsx-runtime'
 import {h} from 'https://esm.sh/hastscript@7'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {createApp} from 'https://esm.sh/vue@3'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/vue-jsx-runtime@0.1/jsx-runtime'
 
 createApp(Component).mount('#root')
 
@@ -476,9 +476,9 @@ function Component() {
 In Node.js, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'solid-jsx/jsx-runtime'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'solid-jsx/jsx-runtime'
 
 console.log(
   toJsxRuntime(h('h1', 'hi!'), {
@@ -500,10 +500,10 @@ Yields:
 In a browser, do:
 
 ```js
-import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
-import {render} from 'https://esm.sh/solid-js@1/web'
 import {h} from 'https://esm.sh/hastscript@7'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
+import {render} from 'https://esm.sh/solid-js@1/web'
 
 render(Component, document.getElementById('root'))
 
@@ -549,12 +549,17 @@ followed by browsers such as Chrome, Firefox, and Safari.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Components`][api-components],
+It exports the additional types
+[`Components`][api-components],
 [`ElementAttributeNameCase`][api-element-attribute-name-case],
-[`Fragment`][api-fragment], [`Jsx`][api-jsx], [`JsxDev`][api-jsx-dev],
-[`Options`][api-options], [`Props`][api-props], [`Source`][api-source],
-[`Space`][api-Space],
-and [`StylePropertyNameCase`][api-style-property-name-case].
+[`Fragment`][api-fragment],
+[`Jsx`][api-jsx],
+[`JsxDev`][api-jsx-dev],
+[`Options`][api-options],
+[`Props`][api-props],
+[`Source`][api-source],
+[`Space`][api-Space], and
+[`StylePropertyNameCase`][api-style-property-name-case].
 
 The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
 namespace has to by typed.
@@ -563,10 +568,13 @@ Typically this is done by installing your frameworks types (e.g.,
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`hast-util-to-jsx-runtime@^1`, compatible with Node.js 12.
 
 ## Security
 
@@ -610,9 +618,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-to-jsx-runtime
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-jsx-runtime.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-to-jsx-runtime
 
-[size]: https://bundlephobia.com/result?p=hast-util-to-jsx-runtime
+[size]: https://bundlejs.com/?q=hast-util-to-jsx-runtime
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
