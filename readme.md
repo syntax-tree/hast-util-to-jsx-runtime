@@ -402,7 +402,7 @@ Yields:
 In a browser, do:
 
 ```js
-import {h} from 'https://esm.sh/hastscript@7'
+import {h} from 'https://esm.sh/hastscript@8'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
 import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
 import {render} from 'https://esm.sh/preact@10'
@@ -451,10 +451,10 @@ Yields:
 In a browser, do:
 
 ```js
-import {h} from 'https://esm.sh/hastscript@7'
+import {h} from 'https://esm.sh/hastscript@8'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
 import {createApp} from 'https://esm.sh/vue@3'
-import {Fragment, jsx, jsxs} from 'https://esm.sh/vue-jsx-runtime@0.1/jsx-runtime'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/vue@3/jsx-runtime'
 
 createApp(Component).mount('#root')
 
@@ -500,7 +500,7 @@ Yields:
 In a browser, do:
 
 ```js
-import {h} from 'https://esm.sh/hastscript@7'
+import {h} from 'https://esm.sh/hastscript@8'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
 import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
 import {render} from 'https://esm.sh/solid-js@1/web'

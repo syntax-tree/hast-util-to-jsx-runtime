@@ -7,7 +7,7 @@
 /* eslint-env browser */
 
 // @ts-expect-error: TS in VS Code doesn’t seem to infer this.
-import * as hastscript from 'https://esm.sh/hastscript@7?dev'
+import * as hastscript from 'https://esm.sh/hastscript@8?dev'
 
 /** @type {typeof import('hastscript').h} */
 const h = hastscript.h
