@@ -68,25 +68,16 @@
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
     "test-api": "node --conditions development test/index.js",
-    "test-coverage": "c8 --check-coverage --100 --reporter lcov npm run test-api",
+    "test-coverage": "c8 --100 --reporter lcov npm run test-api",
     "test": "npm run generate && npm run build && npm run format && npm run test-coverage"
   },
   "prettier": {
-    "tabWidth": 2,
-    "useTabs": false,
-    "singleQuote": true,
     "bracketSpacing": false,
     "semi": false,
-    "trailingComma": "none"
-  },
-  "xo": {
-    "prettier": true,
-    "#": "`n` is wrong",
-    "rules": {
-      "n/file-extension-in-import": "off",
-      "unicorn/prefer-at": "off",
-      "unicorn/prefer-string-replace-all": "off"
-    }
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
   },
   "remarkConfig": {
     "plugins": [
@@ -96,9 +87,19 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true,
+    "ignoreCatch": true,
     "ignoreFiles": [
       "example/**/*.js"
-    ]
+    ],
+    "strict": true
+  },
+  "xo": {
+    "prettier": true,
+    "#": "`n` is wrong",
+    "rules": {
+      "n/file-extension-in-import": "off",
+      "unicorn/prefer-at": "off",
+      "unicorn/prefer-string-replace-all": "off"
+    }
   }
 }
