@@ -71,14 +71,14 @@ npm install hast-util-to-jsx-runtime
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1?bundle'
+  import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2?bundle'
 </script>
 ```
 
@@ -403,7 +403,7 @@ In a browser, do:
 
 ```js
 import {h} from 'https://esm.sh/hastscript@8'
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
 import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
 import {render} from 'https://esm.sh/preact@10'
 
@@ -452,7 +452,7 @@ In a browser, do:
 
 ```js
 import {h} from 'https://esm.sh/hastscript@8'
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
 import {createApp} from 'https://esm.sh/vue@3'
 import {Fragment, jsx, jsxs} from 'https://esm.sh/vue@3/jsx-runtime'
 
@@ -501,7 +501,7 @@ In a browser, do:
 
 ```js
 import {h} from 'https://esm.sh/hastscript@8'
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@1'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
 import {Fragment, jsx, jsxs} from 'https://esm.sh/solid-js@1/h/jsx-runtime'
 import {render} from 'https://esm.sh/solid-js@1/web'
 
