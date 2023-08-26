@@ -46,7 +46,7 @@ with an automatic JSX runtime.
 
 This package is a utility that takes a [hast][] tree and an
 [automatic JSX runtime][jsx-runtime] and turns the tree into anything you
-whish.
+wish.
 
 ## When should I use this?
 
