@@ -50,7 +50,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "c8": "^8.0.0",
-    "esbuild": "^0.18.0",
+    "esbuild": "^0.19.0",
     "hastscript": "^8.0.0",
     "prettier": "^3.0.0",
     "react": "^18.0.0",
@@ -59,7 +59,7 @@
     "remark-preset-wooorm": "^9.0.0",
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
-    "xo": "^0.55.0"
+    "xo": "^0.56.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
