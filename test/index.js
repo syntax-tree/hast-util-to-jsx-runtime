@@ -596,3 +596,60 @@ test('react specific: filter whitespace in tables', async function (t) {
     }
   )
 })
+
+test('react specific: `align` to `style`', async function (t) {
+  const tree = h(null, [
+    h('th', {style: 'color:red', align: 'center'}, 'alpha'),
+    h('td', {style: 'background-color:blue;', align: 'left'}, 'bravo'),
+    h('td', {align: 'right'}, 'charlie'),
+    h('td', 'delta')
+  ])
+
+  await t.test(
+    'should not transform `align` w/ `tableCellAlignToStyle: false`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(tree, {...production, tableCellAlignToStyle: false})
+        ),
+        '<th style="color:red" align="center">alpha</th><td style="background-color:blue" align="left">bravo</td><td align="right">charlie</td><td>delta</td>'
+      )
+    }
+  )
+
+  await t.test(
+    'should transform `align` w/o `tableCellAlignToStyle`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(toJsxRuntime(tree, production)),
+        '<th style="color:red;text-align:center">alpha</th><td style="background-color:blue;text-align:left">bravo</td><td style="text-align:right">charlie</td><td>delta</td>'
+      )
+    }
+  )
+
+  await t.test(
+    "should suppoort `tableCellAlignToStyle` w/ `stylePropertyNameCase: 'css'`",
+    async function () {
+      /** @type {unknown} */
+      let foundProps
+
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(h('td', {align: 'center'}), {
+            ...production,
+            jsx(type, props) {
+              foundProps = props
+              return production.jsx(type, {})
+            },
+            stylePropertyNameCase: 'css'
+          })
+        ),
+        '<td></td>'
+      )
+
+      assert.deepEqual(foundProps, {
+        style: {'text-align': 'center'}
+      })
+    }
+  )
+})

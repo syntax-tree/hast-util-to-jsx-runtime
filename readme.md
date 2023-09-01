@@ -206,6 +206,9 @@ Configuration (TypeScript type).
     ([`StylePropertyNameCase`][api-style-property-name-case],
     default: `'dom'`)
     — specify casing to use for property names in `style` objects
+*   `tableCellAlignToStyle`
+    (`boolean`, default: `true`)
+    — turn obsolete `align` props on `td` and `th` into CSS `style` props
 
 ### `Components`
 

@@ -104,6 +104,7 @@
     "prettier": true,
     "#": "`n` is wrong",
     "rules": {
+      "max-depth": "off",
       "n/file-extension-in-import": "off",
       "unicorn/prefer-at": "off",
       "unicorn/prefer-string-replace-all": "off"
