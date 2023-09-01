@@ -628,7 +628,7 @@ test('react specific: `align` to `style`', async function (t) {
   )
 
   await t.test(
-    "should suppoort `tableCellAlignToStyle` w/ `stylePropertyNameCase: 'css'`",
+    "should support `tableCellAlignToStyle` w/ `stylePropertyNameCase: 'css'`",
     async function () {
       /** @type {unknown} */
       let foundProps
@@ -649,6 +649,32 @@ test('react specific: `align` to `style`', async function (t) {
 
       assert.deepEqual(foundProps, {
         style: {'text-align': 'center'}
+      })
+    }
+  )
+
+  await t.test(
+    "should support `tableCellAlignToStyle` w/ `stylePropertyNameCase: 'dom'`",
+    async function () {
+      /** @type {unknown} */
+      let foundProps
+
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(h('td', {align: 'center'}), {
+            ...production,
+            jsx(type, props) {
+              foundProps = props
+              return production.jsx(type, {})
+            },
+            stylePropertyNameCase: 'dom'
+          })
+        ),
+        '<td></td>'
+      )
+
+      assert.deepEqual(foundProps, {
+        style: {textAlign: 'center'}
       })
     }
   )
