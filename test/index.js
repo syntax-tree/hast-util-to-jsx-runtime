@@ -341,6 +341,21 @@ test('properties', async function (t) {
     }
   )
 
+  await t.test(
+    'should not crash on invalid style strings w/ `ignoreInvalidStyle`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(h('div', {style: 'color:red; /*'}), {
+            ...production,
+            ignoreInvalidStyle: true
+          })
+        ),
+        '<div></div>'
+      )
+    }
+  )
+
   await t.test('should support properties in the SVG space', async function () {
     assert.equal(
       renderToStaticMarkup(

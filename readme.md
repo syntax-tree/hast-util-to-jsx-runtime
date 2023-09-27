@@ -170,6 +170,8 @@ CSS, and pass it as an object.
 But when broken CSS is used, such as `style="color:red; /*"`, we crash.
 
 To solve the error, make sure authors write valid CSS.
+Alternatively, pass `options.ignoreInvalidStyle: true` to swallow theses
+errors.
 
 ### `Options`
 
