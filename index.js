@@ -1,5 +1,6 @@
 /**
  * @typedef {import('./lib/components.js').Components} Components
+ * @typedef {import('./lib/components.js').ExtraProps} ExtraProps
  * @typedef {import('./lib/index.js').ElementAttributeNameCase} ElementAttributeNameCase
  * @typedef {import('./lib/index.js').Fragment} Fragment
  * @typedef {import('./lib/index.js').Jsx} Jsx

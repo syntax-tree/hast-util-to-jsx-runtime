@@ -22,6 +22,7 @@ with an automatic JSX runtime.
     *   [`Options`](#options)
     *   [`Components`](#components)
     *   [`ElementAttributeNameCase`](#elementattributenamecase)
+    *   [`ExtraProps`](#extraprops)
     *   [`Fragment`](#fragment)
     *   [`Jsx`](#jsx)
     *   [`JsxDev`](#jsxdev)
@@ -254,6 +255,16 @@ React casing is for example `className`, `strokeLinecap`, `xmlLang`.
 
 ```ts
 type ElementAttributeNameCase = 'html' | 'react'
+```
+
+### `ExtraProps`
+
+Extra fields we pass (TypeScript type).
+
+###### Type
+
+```ts
+type ExtraProps = {node?: Element | undefined}
 ```
 
 ### `Fragment`
@@ -557,6 +568,7 @@ This package is fully typed with [TypeScript][].
 It exports the additional types
 [`Components`][api-components],
 [`ElementAttributeNameCase`][api-element-attribute-name-case],
+[`ExtraProps`][api-extra-props],
 [`Fragment`][api-fragment],
 [`Jsx`][api-jsx],
 [`JsxDev`][api-jsx-dev],
@@ -670,6 +682,8 @@ abide by its terms.
 [api-components]: #components
 
 [api-element-attribute-name-case]: #elementattributenamecase
+
+[api-extra-props]: #extraprops
 
 [api-fragment]: #fragment
 
