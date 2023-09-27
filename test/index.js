@@ -556,6 +556,19 @@ test('components', async function (t) {
       'a'
     )
   })
+
+  await t.test('should not pas `node` to basic components', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(h('h1', 'a'), {
+          ...production,
+          passNode: true,
+          components: {h1: 'h2'}
+        })
+      ),
+      '<h2>a</h2>'
+    )
+  })
 })
 
 test('react specific: filter whitespace in tables', async function (t) {
