@@ -13,35 +13,35 @@ with an automatic JSX runtime.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
-    *   [`Options`](#options)
-    *   [`Components`](#components)
-    *   [`ElementAttributeNameCase`](#elementattributenamecase)
-    *   [`ExtraProps`](#extraprops)
-    *   [`Fragment`](#fragment)
-    *   [`Jsx`](#jsx)
-    *   [`JsxDev`](#jsxdev)
-    *   [`Props`](#props)
-    *   [`Source`](#source)
-    *   [`Space`](#space)
-    *   [`StylePropertyNameCase`](#stylepropertynamecase)
-*   [Examples](#examples)
-    *   [Example: Preact](#example-preact)
-    *   [Example: Vue](#example-vue)
-    *   [Example: Solid](#example-solid)
-    *   [Example: Svelte](#example-svelte)
-*   [Syntax](#syntax)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
+  * [`Options`](#options)
+  * [`Components`](#components)
+  * [`ElementAttributeNameCase`](#elementattributenamecase)
+  * [`ExtraProps`](#extraprops)
+  * [`Fragment`](#fragment)
+  * [`Jsx`](#jsx)
+  * [`JsxDev`](#jsxdev)
+  * [`Props`](#props)
+  * [`Source`](#source)
+  * [`Space`](#space)
+  * [`StylePropertyNameCase`](#stylepropertynamecase)
+* [Examples](#examples)
+  * [Example: Preact](#example-preact)
+  * [Example: Vue](#example-vue)
+  * [Example: Solid](#example-solid)
+  * [Example: Svelte](#example-svelte)
+* [Syntax](#syntax)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Related](#related)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -116,10 +116,10 @@ automatic JSX runtime.
 
 ##### Parameters
 
-*   `tree` ([`Node`][node])
-    — tree to transform
-*   `options` ([`Options`][api-options], required)
-    — configuration
+* `tree` ([`Node`][node])
+  — tree to transform
+* `options` ([`Options`][api-options], required)
+  — configuration
 
 ##### Returns
 
@@ -180,38 +180,38 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-*   `Fragment` ([`Fragment`][api-fragment], required)
-    — fragment
-*   `jsx` ([`Jsx`][api-jsx], required in production)
-    — dynamic JSX
-*   `jsxs` ([`Jsx`][api-jsx], required in production)
-    — static JSX
-*   `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
-    — development JSX
-*   `components` ([`Partial<Components>`][api-components], optional)
-    — components to use
-*   `development` (`boolean`, default: `false`)
-    — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
-*   `elementAttributeNameCase`
-    ([`ElementAttributeNameCase`][api-element-attribute-name-case],
-    default: `'react'`)
-    — specify casing to use for attribute names
-*   `filePath` (`string`, optional)
-    — file path to the original source file, passed in source info to `jsxDEV`
-    when using the automatic runtime with `development: true`
-*   `passNode` (`boolean`, default: `false`)
-    — pass the hast element node to components
-*   `space` ([`Space`][api-space], default: `'html'`)
-    — whether `tree` is in the `'html'` or `'svg'` space, when an `<svg>`
-    element is found in the HTML space, this package already automatically
-    switches to and from the SVG space when entering and exiting it
-*   `stylePropertyNameCase`
-    ([`StylePropertyNameCase`][api-style-property-name-case],
-    default: `'dom'`)
-    — specify casing to use for property names in `style` objects
-*   `tableCellAlignToStyle`
-    (`boolean`, default: `true`)
-    — turn obsolete `align` props on `td` and `th` into CSS `style` props
+* `Fragment` ([`Fragment`][api-fragment], required)
+  — fragment
+* `jsx` ([`Jsx`][api-jsx], required in production)
+  — dynamic JSX
+* `jsxs` ([`Jsx`][api-jsx], required in production)
+  — static JSX
+* `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
+  — development JSX
+* `components` ([`Partial<Components>`][api-components], optional)
+  — components to use
+* `development` (`boolean`, default: `false`)
+  — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
+* `elementAttributeNameCase`
+  ([`ElementAttributeNameCase`][api-element-attribute-name-case],
+  default: `'react'`)
+  — specify casing to use for attribute names
+* `filePath` (`string`, optional)
+  — file path to the original source file, passed in source info to `jsxDEV`
+  when using the automatic runtime with `development: true`
+* `passNode` (`boolean`, default: `false`)
+  — pass the hast element node to components
+* `space` ([`Space`][api-space], default: `'html'`)
+  — whether `tree` is in the `'html'` or `'svg'` space, when an `<svg>`
+  element is found in the HTML space, this package already automatically
+  switches to and from the SVG space when entering and exiting it
+* `stylePropertyNameCase`
+  ([`StylePropertyNameCase`][api-style-property-name-case],
+  default: `'dom'`)
+  — specify casing to use for property names in `style` objects
+* `tableCellAlignToStyle`
+  (`boolean`, default: `true`)
+  — turn obsolete `align` props on `td` and `th` into CSS `style` props
 
 ### `Components`
 
@@ -283,12 +283,12 @@ Create a production element (TypeScript type).
 
 ###### Parameters
 
-*   `type` (`unknown`)
-    — element type: `Fragment` symbol, tag name (`string`), component
-*   `props` ([`Props`][api-props])
-    — element props, `children`, and maybe `node`
-*   `key` (`string` or `undefined`)
-    — dynamicly generated key to use
+* `type` (`unknown`)
+  — element type: `Fragment` symbol, tag name (`string`), component
+* `props` ([`Props`][api-props])
+  — element props, `children`, and maybe `node`
+* `key` (`string` or `undefined`)
+  — dynamicly generated key to use
 
 ###### Returns
 
@@ -300,19 +300,19 @@ Create a development element (TypeScript type).
 
 ###### Parameters
 
-*   `type` (`unknown`)
-    — element type: `Fragment` symbol, tag name (`string`), component
-*   `props` ([`Props`][api-props])
-    — element props, `children`, and maybe `node`
-*   `key` (`string` or `undefined`)
-    — dynamicly generated key to use
-*   `isStaticChildren` (`boolean`)
-    — whether two or more children are passed (in an array), which is whether
-    `jsxs` or `jsx` would be used
-*   `source` ([`Source`][api-source])
-    — info about source
-*   `self` (`undefined`)
-    — nothing (this is used by frameworks that have components, we don’t)
+* `type` (`unknown`)
+  — element type: `Fragment` symbol, tag name (`string`), component
+* `props` ([`Props`][api-props])
+  — element props, `children`, and maybe `node`
+* `key` (`string` or `undefined`)
+  — dynamicly generated key to use
+* `isStaticChildren` (`boolean`)
+  — whether two or more children are passed (in an array), which is whether
+  `jsxs` or `jsx` would be used
+* `source` ([`Source`][api-source])
+  — info about source
+* `self` (`undefined`)
+  — nothing (this is used by frameworks that have components, we don’t)
 
 ###### Returns
 
@@ -347,12 +347,12 @@ Info about source (TypeScript type).
 
 ###### Fields
 
-*   `columnNumber` (`number` or `undefined`)
-    — column where thing starts (0-indexed)
-*   `fileName` (`string` or `undefined`)
-    — name of source file
-*   `lineNumber` (`number` or `undefined`)
-    — line where thing starts (1-indexed)
+* `columnNumber` (`number` or `undefined`)
+  — column where thing starts (0-indexed)
+* `fileName` (`string` or `undefined`)
+  — name of source file
+* `lineNumber` (`number` or `undefined`)
+  — line where thing starts (1-indexed)
 
 ### `Space`
 
@@ -600,12 +600,12 @@ Use [`hast-util-santize`][hast-util-sanitize] to make hast trees safe.
 
 ## Related
 
-*   [`hastscript`](https://github.com/syntax-tree/hastscript)
-    — build hast trees
-*   [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
-    — serialize hast as HTML
-*   [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
-    — sanitize hast
+* [`hastscript`](https://github.com/syntax-tree/hastscript)
+  — build hast trees
+* [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
+  — serialize hast as HTML
+* [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
+  — sanitize hast
 
 ## Contribute
 
