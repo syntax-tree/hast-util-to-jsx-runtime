@@ -21,7 +21,11 @@ with an automatic JSX runtime.
   * [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
   * [`Options`](#options)
   * [`Components`](#components)
+  * [`CreateEvaluater`](#createevaluater)
   * [`ElementAttributeNameCase`](#elementattributenamecase)
+  * [`EvaluateExpression`](#evaluateexpression)
+  * [`EvaluateProgram`](#evaluateprogram)
+  * [`Evaluater`](#evaluater)
   * [`ExtraProps`](#extraprops)
   * [`Fragment`](#fragment)
   * [`Jsx`](#jsx)
@@ -161,6 +165,14 @@ The automatic JSX runtime, in production, needs these functions.
 To solve the error, make sure you are importing the correct runtime functions
 (for example, `'react/jsx-runtime'`), and pass `jsx` and `jsxs`.
 
+###### `` Cannot handle MDX estrees without `createEvaluater` ``
+
+This error is thrown when MDX nodes are passed that represent JavaScript
+programs or expressions.
+
+Supporting JavaScript can be unsafe and requires a different project.
+To support JavaScript, pass a `createEvaluater` function in `options`.
+
 ###### ``Cannot parse `style` attribute``
 
 This error is thrown when a `style` attribute is found on an element, which
@@ -171,7 +183,7 @@ CSS, and pass it as an object.
 But when broken CSS is used, such as `style="color:red; /*"`, we crash.
 
 To solve the error, make sure authors write valid CSS.
-Alternatively, pass `options.ignoreInvalidStyle: true` to swallow theses
+Alternatively, pass `options.ignoreInvalidStyle: true` to swallow these
 errors.
 
 ### `Options`
@@ -196,6 +208,8 @@ Configuration (TypeScript type).
   ([`ElementAttributeNameCase`][api-element-attribute-name-case],
   default: `'react'`)
   — specify casing to use for attribute names
+* `createEvaluater` ([`CreateEvaluater`][api-create-evaluater], optional)
+  — create an evaluator that turns ESTree ASTs into values
 * `filePath` (`string`, optional)
   — file path to the original source file, passed in source info to `jsxDEV`
   when using the automatic runtime with `development: true`
@@ -244,6 +258,19 @@ type Component<ComponentProps> =
   | ((props: ComponentProps) => JSX.Element | string | null | undefined)
 ```
 
+### `CreateEvaluater`
+
+Create an evaluator that turns ESTree ASTs from embedded MDX into values
+(TypeScript type).
+
+###### Parameters
+
+There are no parameters.
+
+###### Returns
+
+Evaluater ([`Evaluater`][api-evaluater]).
+
 ### `ElementAttributeNameCase`
 
 Casing to use for attribute names (TypeScript type).
@@ -256,6 +283,46 @@ React casing is for example `className`, `strokeLinecap`, `xmlLang`.
 ```ts
 type ElementAttributeNameCase = 'html' | 'react'
 ```
+
+### `EvaluateExpression`
+
+Turn an MDX expression into a value (TypeScript type).
+
+###### Parameters
+
+* `expression` (`Expression` from `@types/estree`)
+  — estree expression
+
+###### Returns
+
+Result of expression (`unknown`).
+
+### `EvaluateProgram`
+
+Turn an MDX program (export/import statements) into a value (TypeScript type).
+
+###### Parameters
+
+* `program` (`Program` from `@types/estree`)
+  — estree program
+
+###### Returns
+
+Result of program (`unknown`);
+should likely be `undefined` as ESM changes the scope but doesn’t yield
+something.
+
+### `Evaluater`
+
+Evaluator that turns ESTree ASTs from embedded MDX into values (TypeScript
+type).
+
+###### Fields
+
+* `evaluateExpression` ([`EvaluateExpression`][api-evaluate-expression])
+  — evaluate an expression
+* `evaluateProgram` ([`EvaluateProgram`][api-evaluate-program])
+  — evaluate a program
 
 ### `ExtraProps`
 
@@ -292,7 +359,7 @@ Create a production element (TypeScript type).
 
 ###### Returns
 
-An element from your framework (`JSX.Element`).
+Element from your framework (`JSX.Element`).
 
 ### `JsxDev`
 
@@ -316,7 +383,7 @@ Create a development element (TypeScript type).
 
 ###### Returns
 
-An element from your framework (`JSX.Element`).
+Element from your framework (`JSX.Element`).
 
 ### `Props`
 
@@ -567,7 +634,11 @@ followed by browsers such as Chrome, Firefox, and Safari.
 This package is fully typed with [TypeScript][].
 It exports the additional types
 [`Components`][api-components],
+[`CreateEvaluater`][api-create-evaluater],
 [`ElementAttributeNameCase`][api-element-attribute-name-case],
+[`EvaluateExpression`][api-evaluate-expression],
+[`EvaluateProgram`][api-evaluate-program],
+[`Evaluater`][api-evaluater],
 [`ExtraProps`][api-extra-props],
 [`Fragment`][api-fragment],
 [`Jsx`][api-jsx],
@@ -681,7 +752,15 @@ abide by its terms.
 
 [api-components]: #components
 
+[api-create-evaluater]: #createevaluater
+
 [api-element-attribute-name-case]: #elementattributenamecase
+
+[api-evaluate-expression]: #evaluateexpression
+
+[api-evaluate-program]: #evaluateprogram
+
+[api-evaluater]: #evaluater
 
 [api-extra-props]: #extraprops
 

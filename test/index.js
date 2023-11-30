@@ -1,4 +1,8 @@
 /**
+ * @typedef {import('estree').Expression} Expression
+ * @typedef {import('estree').Program} Program
+ *
+ * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater} CreateEvaluater
  * @typedef {import('hast-util-to-jsx-runtime').Fragment} Fragment
  * @typedef {import('hast-util-to-jsx-runtime').Jsx} Jsx
  * @typedef {import('hast-util-to-jsx-runtime').JsxDev} JsxDev
@@ -8,12 +12,18 @@
 
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import {visit} from 'estree-util-visit'
 import {h, s} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import * as sval from 'sval'
 import React from 'react'
 import * as dev from 'react/jsx-dev-runtime'
 import * as prod from 'react/jsx-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
+
+/** @type {import('sval')['default']} */
+// @ts-expect-error: ESM types are wrong.
+const Sval = sval.default
 
 /** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */
 // @ts-expect-error: the react types are missing.
@@ -675,9 +685,7 @@ test('react specific: `align` to `style`', async function (t) {
         '<td></td>'
       )
 
-      assert.deepEqual(foundProps, {
-        style: {'text-align': 'center'}
-      })
+      assert.deepEqual(foundProps, {style: {'text-align': 'center'}})
     }
   )
 
@@ -701,9 +709,612 @@ test('react specific: `align` to `style`', async function (t) {
         '<td></td>'
       )
 
-      assert.deepEqual(foundProps, {
-        style: {textAlign: 'center'}
-      })
+      assert.deepEqual(foundProps, {style: {textAlign: 'center'}})
     }
   )
 })
+
+test('mdx: jsx', async function (t) {
+  await t.test('should transform MDX JSX (text)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {type: 'mdxJsxTextElement', name: 'a', attributes: [], children: []},
+          production
+        )
+      ),
+      '<a></a>'
+    )
+  })
+
+  await t.test('should transform MDX JSX (flow)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {type: 'mdxJsxTextElement', name: 'h1', attributes: [], children: []},
+          production
+        )
+      ),
+      '<h1></h1>'
+    )
+  })
+
+  await t.test('should transform MDX JSX (fragment)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: null,
+            attributes: [],
+            children: [{type: 'text', value: 'a'}]
+          },
+          production
+        )
+      ),
+      'a'
+    )
+  })
+
+  await t.test('should transform MDX JSX (fragment)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {type: 'mdxJsxTextElement', name: null, attributes: [], children: []},
+          production
+        )
+      ),
+      ''
+    )
+  })
+
+  await t.test(
+    'should transform MDX JSX (attribute, w/o value)',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {type: 'mdxJsxAttribute', name: 'hidden', value: null}
+              ],
+              children: []
+            },
+            production
+          )
+        ),
+        '<a hidden=""></a>'
+      )
+    }
+  )
+
+  await t.test(
+    'should transform MDX JSX (attribute, w/ value)',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [{type: 'mdxJsxAttribute', name: 'x', value: 'y'}],
+              children: []
+            },
+            production
+          )
+        ),
+        '<a x="y"></a>'
+      )
+    }
+  )
+
+  await t.test('should transform MDX JSX (SVG)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'svg',
+            attributes: [],
+            children: [
+              s('g', {
+                colorInterpolationFilters: 'sRGB',
+                xmlSpace: 'preserve',
+                xmlnsXLink: 'http://www.w3.org/1999/xlink',
+                xLinkArcRole: 'http://www.example.com'
+              })
+            ]
+          },
+          production
+        )
+      ),
+      '<svg><g color-interpolation-filters="sRGB" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:arcrole="http://www.example.com"></g></svg>'
+    )
+  })
+
+  await t.test('should transform MDX JSX (literal)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {type: 'mdxJsxTextElement', name: 'a', attributes: [], children: []},
+          {...production, components: {a: 'b'}}
+        )
+      ),
+      '<b></b>'
+    )
+  })
+
+  await t.test('should transform MDX JSX (namespace)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'a:b',
+            attributes: [],
+            children: []
+          },
+          {
+            ...production,
+            components: {
+              // @ts-expect-error: untyped.
+              'a:b': 'b'
+            }
+          }
+        )
+      ),
+      '<b></b>'
+    )
+  })
+
+  await t.test('should throw on identifier by default', async function () {
+    assert.throws(function () {
+      toJsxRuntime(
+        {
+          type: 'mdxJsxFlowElement',
+          name: 'A',
+          attributes: [],
+          children: []
+        },
+        production
+      )
+    }, /Cannot handle MDX estrees without `createEvaluater`/)
+  })
+
+  await t.test('should transform MDX JSX (component)', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {
+            type: 'root',
+            children: [
+              {
+                type: 'mdxjsEsm',
+                value: "export const A = 'b'",
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExportNamedDeclaration',
+                        declaration: {
+                          type: 'VariableDeclaration',
+                          declarations: [
+                            {
+                              type: 'VariableDeclarator',
+                              id: {type: 'Identifier', name: 'A'},
+                              init: {type: 'Literal', value: 'b'}
+                            }
+                          ],
+                          kind: 'const'
+                        },
+                        specifiers: [],
+                        source: null
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
+                  }
+                }
+              },
+              {
+                type: 'mdxJsxFlowElement',
+                name: 'A',
+                attributes: [],
+                children: []
+              }
+            ]
+          },
+          {...production, createEvaluater}
+        )
+      ),
+      '<b></b>'
+    )
+  })
+
+  await t.test(
+    'should transform MDX JSX (member expression, non-identifier)',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'root',
+              children: [
+                {
+                  type: 'mdxjsEsm',
+                  value: "export const a = {'b-c': 'c'}",
+                  data: {
+                    estree: {
+                      type: 'Program',
+                      body: [
+                        {
+                          type: 'ExportNamedDeclaration',
+                          declaration: {
+                            type: 'VariableDeclaration',
+                            declarations: [
+                              {
+                                type: 'VariableDeclarator',
+                                id: {type: 'Identifier', name: 'a'},
+                                init: {
+                                  type: 'ObjectExpression',
+                                  properties: [
+                                    {
+                                      type: 'Property',
+                                      method: false,
+                                      shorthand: false,
+                                      computed: false,
+                                      key: {type: 'Literal', value: 'b-c'},
+                                      value: {type: 'Literal', value: 'c'},
+                                      kind: 'init'
+                                    }
+                                  ]
+                                }
+                              }
+                            ],
+                            kind: 'const'
+                          },
+                          specifiers: [],
+                          source: null
+                        }
+                      ],
+                      sourceType: 'module',
+                      comments: []
+                    }
+                  }
+                },
+                {
+                  type: 'mdxJsxFlowElement',
+                  name: 'a.b-c',
+                  attributes: [],
+                  children: []
+                }
+              ]
+            },
+            {...production, createEvaluater}
+          )
+        ),
+        '<c></c>'
+      )
+    }
+  )
+
+  await t.test(
+    'should throw on expression attribute by default',
+    async function () {
+      assert.throws(function () {
+        toJsxRuntime(
+          {
+            type: 'mdxJsxFlowElement',
+            name: 'a',
+            attributes: [{type: 'mdxJsxExpressionAttribute', value: '...x'}],
+            children: []
+          },
+          production
+        )
+      }, /Cannot handle MDX estrees without `createEvaluater`/)
+    }
+  )
+
+  await t.test(
+    'should throw on attribute value expression by default',
+    async function () {
+      assert.throws(function () {
+        toJsxRuntime(
+          {
+            type: 'mdxJsxFlowElement',
+            name: 'a',
+            attributes: [
+              {
+                type: 'mdxJsxAttribute',
+                name: 'x',
+                value: {type: 'mdxJsxAttributeValueExpression', value: '1'}
+              }
+            ],
+            children: []
+          },
+          production
+        )
+      }, /Cannot handle MDX estrees without `createEvaluater`/)
+    }
+  )
+
+  await t.test(
+    'should support expression attribute w/ `createEvaluater`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {
+                  type: 'mdxJsxExpressionAttribute',
+                  value: "...{x: 'y'}",
+                  data: {
+                    estree: {
+                      type: 'Program',
+                      body: [
+                        {
+                          type: 'ExpressionStatement',
+                          expression: {
+                            type: 'ObjectExpression',
+                            properties: [
+                              {
+                                type: 'SpreadElement',
+                                argument: {
+                                  type: 'ObjectExpression',
+                                  properties: [
+                                    {
+                                      type: 'Property',
+                                      method: false,
+                                      shorthand: false,
+                                      computed: false,
+                                      key: {type: 'Identifier', name: 'x'},
+                                      value: {type: 'Literal', value: 'y'},
+                                      kind: 'init'
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      sourceType: 'module',
+                      comments: []
+                    }
+                  }
+                }
+              ],
+              children: []
+            },
+            {...production, createEvaluater}
+          )
+        ),
+        '<a x="y"></a>'
+      )
+    }
+  )
+
+  await t.test(
+    'should support attribute value expression w/ `createEvaluater`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {
+                  type: 'mdxJsxAttribute',
+                  name: 'x',
+                  value: {
+                    type: 'mdxJsxAttributeValueExpression',
+                    value: "'y'",
+                    data: {
+                      estree: {
+                        type: 'Program',
+                        body: [
+                          {
+                            type: 'ExpressionStatement',
+                            expression: {type: 'Literal', value: 'y'}
+                          }
+                        ],
+                        sourceType: 'module',
+                        comments: []
+                      }
+                    }
+                  }
+                }
+              ],
+              children: []
+            },
+            {...production, createEvaluater}
+          )
+        ),
+        '<a x="y"></a>'
+      )
+    }
+  )
+})
+
+test('mdx: expression', async function (t) {
+  await t.test('should throw on expression by default', async function () {
+    assert.throws(function () {
+      toJsxRuntime({type: 'mdxFlowExpression', value: "'a'"}, production)
+    }, /Cannot handle MDX estrees without `createEvaluater`/)
+  })
+
+  await t.test(
+    'should support expression w/ `createEvaluater`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            {
+              type: 'mdxFlowExpression',
+              value: "'a'",
+              data: {
+                estree: {
+                  type: 'Program',
+                  body: [
+                    {
+                      type: 'ExpressionStatement',
+                      expression: {type: 'Literal', value: 'a'}
+                    }
+                  ],
+                  sourceType: 'module',
+                  comments: []
+                }
+              }
+            },
+            {...production, createEvaluater}
+          )
+        ),
+        'a'
+      )
+    }
+  )
+})
+
+test('mdx: ESM', async function (t) {
+  await t.test('should throw on ESM by default', async function () {
+    assert.throws(function () {
+      toJsxRuntime(
+        {type: 'mdxjsEsm', value: "export const a = 'a'"},
+        production
+      )
+    }, /Cannot handle MDX estrees without `createEvaluater`/)
+  })
+
+  await t.test('should support ESM w/ `createEvaluater`', async function () {
+    assert.equal(
+      renderToStaticMarkup(
+        toJsxRuntime(
+          {
+            type: 'root',
+            children: [
+              {
+                type: 'mdxjsEsm',
+                value: "export const a = 'b'",
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExportNamedDeclaration',
+                        declaration: {
+                          type: 'VariableDeclaration',
+                          declarations: [
+                            {
+                              type: 'VariableDeclarator',
+                              id: {type: 'Identifier', name: 'a'},
+                              init: {type: 'Literal', value: 'b'}
+                            }
+                          ],
+                          kind: 'const'
+                        },
+                        specifiers: [],
+                        source: null
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
+                  }
+                }
+              },
+              {
+                type: 'mdxFlowExpression',
+                value: 'a',
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExpressionStatement',
+                        expression: {type: 'Identifier', name: 'a'}
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
+                  }
+                }
+              }
+            ]
+          },
+          {...production, createEvaluater}
+        )
+      ),
+      'b'
+    )
+  })
+})
+
+/**
+ * @type {CreateEvaluater}
+ */
+function createEvaluater() {
+  const interpreter = new Sval({sandBox: true})
+
+  return {
+    evaluateExpression(expression) {
+      /** @type {Program} */
+      const program = {
+        type: 'Program',
+        body: [
+          {
+            type: 'ExpressionStatement',
+            expression: {
+              type: 'AssignmentExpression',
+              operator: '=',
+              left: {
+                type: 'MemberExpression',
+                object: {type: 'Identifier', name: 'exports'},
+                property: {
+                  type: 'Identifier',
+                  name: '_evaluateExpressionValue'
+                },
+                computed: false,
+                optional: false
+              },
+              right: expression
+            }
+          }
+        ],
+        sourceType: 'module'
+      }
+
+      interpreter.run(program)
+      const value = /** @type {unknown} */ (
+        // type-coverage:ignore-next-line
+        interpreter.exports._evaluateExpressionValue
+      )
+      // type-coverage:ignore-next-line
+      interpreter.exports._evaluateExpressionValue = undefined
+      return value
+    },
+    /**
+     * @returns {undefined}
+     */
+    evaluateProgram(program) {
+      visit(program, function (node, key, index, parents) {
+        // Sval doesn’t support exports yet.
+        if (node.type === 'ExportNamedDeclaration' && node.declaration) {
+          const parent = parents[parents.length - 1]
+          assert(parent)
+          assert(typeof key === 'string')
+          assert(typeof index === 'number')
+          // @ts-expect-error: fine.
+          parent[key][index] = node.declaration
+        }
+      })
+
+      interpreter.run(program)
+    }
+  }
+}
