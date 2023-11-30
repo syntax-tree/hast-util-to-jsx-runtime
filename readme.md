@@ -19,7 +19,6 @@ with an automatic JSX runtime.
 * [Use](#use)
 * [API](#api)
   * [`toJsxRuntime(tree, options)`](#tojsxruntimetree-options)
-  * [`Options`](#options)
   * [`Components`](#components)
   * [`CreateEvaluater`](#createevaluater)
   * [`ElementAttributeNameCase`](#elementattributenamecase)
@@ -30,17 +29,18 @@ with an automatic JSX runtime.
   * [`Fragment`](#fragment)
   * [`Jsx`](#jsx)
   * [`JsxDev`](#jsxdev)
+  * [`Options`](#options)
   * [`Props`](#props)
   * [`Source`](#source)
   * [`Space`](#space)
   * [`StylePropertyNameCase`](#stylepropertynamecase)
+* [Errors](#errors)
 * [Examples](#examples)
   * [Example: Preact](#example-preact)
-  * [Example: Vue](#example-vue)
   * [Example: Solid](#example-solid)
   * [Example: Svelte](#example-svelte)
+  * [Example: Vue](#example-vue)
 * [Syntax](#syntax)
-* [Types](#types)
 * [Compatibility](#compatibility)
 * [Security](#security)
 * [Related](#related)
@@ -111,6 +111,22 @@ Yields:
 ## API
 
 This package exports the identifier [`toJsxRuntime`][api-to-jsx-runtime].
+It exports the [TypeScript][] types
+[`Components`][api-components],
+[`CreateEvaluater`][api-create-evaluater],
+[`ElementAttributeNameCase`][api-element-attribute-name-case],
+[`EvaluateExpression`][api-evaluate-expression],
+[`EvaluateProgram`][api-evaluate-program],
+[`Evaluater`][api-evaluater],
+[`ExtraProps`][api-extra-props],
+[`Fragment`][api-fragment],
+[`Jsx`][api-jsx],
+[`JsxDev`][api-jsx-dev],
+[`Options`][api-options],
+[`Props`][api-props],
+[`Source`][api-source],
+[`Space`][api-Space], and
+[`StylePropertyNameCase`][api-style-property-name-case].
 There is no default export.
 
 ### `toJsxRuntime(tree, options)`
@@ -128,104 +144,6 @@ automatic JSX runtime.
 ##### Returns
 
 Result from your configured JSX runtime (`JSX.Element`).
-
-##### Throws
-
-The following errors are thrown:
-
-###### ``Expected `Fragment` in options``
-
-This error is thrown when either `options` is not passed at all or
-when `options.Fragment` is `undefined`.
-
-The automatic JSX runtime needs a symbol for a fragment to work.
-
-To solve the error, make sure you are passing the correct fragment symbol from
-your framework.
-
-###### `` Expected `jsxDEV` in options when `development: true` ``
-
-This error is thrown when `options.development` is turned on (`true`), but when
-`options.jsxDEV` is not a function.
-
-The automatic JSX runtime, in development, needs this function.
-
-To solve the error, make sure you are importing the correct runtime functions
-(for example, `'react/jsx-dev-runtime'`), and pass `jsxDEV`.
-
-###### ``Expected `jsx` in production options``
-
-###### ``Expected `jsxs` in production options``
-
-These errors are thrown when `options.development` is *not* turned on (`false`
-or not defined), and when `options.jsx` or `options.jsxs` are not functions.
-
-The automatic JSX runtime, in production, needs these functions.
-
-To solve the error, make sure you are importing the correct runtime functions
-(for example, `'react/jsx-runtime'`), and pass `jsx` and `jsxs`.
-
-###### `` Cannot handle MDX estrees without `createEvaluater` ``
-
-This error is thrown when MDX nodes are passed that represent JavaScript
-programs or expressions.
-
-Supporting JavaScript can be unsafe and requires a different project.
-To support JavaScript, pass a `createEvaluater` function in `options`.
-
-###### ``Cannot parse `style` attribute``
-
-This error is thrown when a `style` attribute is found on an element, which
-cannot be parsed as CSS.
-
-Most frameworks don’t accept `style` as a string, so we need to parse it as
-CSS, and pass it as an object.
-But when broken CSS is used, such as `style="color:red; /*"`, we crash.
-
-To solve the error, make sure authors write valid CSS.
-Alternatively, pass `options.ignoreInvalidStyle: true` to swallow these
-errors.
-
-### `Options`
-
-Configuration (TypeScript type).
-
-###### Fields
-
-* `Fragment` ([`Fragment`][api-fragment], required)
-  — fragment
-* `jsx` ([`Jsx`][api-jsx], required in production)
-  — dynamic JSX
-* `jsxs` ([`Jsx`][api-jsx], required in production)
-  — static JSX
-* `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
-  — development JSX
-* `components` ([`Partial<Components>`][api-components], optional)
-  — components to use
-* `development` (`boolean`, default: `false`)
-  — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
-* `elementAttributeNameCase`
-  ([`ElementAttributeNameCase`][api-element-attribute-name-case],
-  default: `'react'`)
-  — specify casing to use for attribute names
-* `createEvaluater` ([`CreateEvaluater`][api-create-evaluater], optional)
-  — create an evaluator that turns ESTree ASTs into values
-* `filePath` (`string`, optional)
-  — file path to the original source file, passed in source info to `jsxDEV`
-  when using the automatic runtime with `development: true`
-* `passNode` (`boolean`, default: `false`)
-  — pass the hast element node to components
-* `space` ([`Space`][api-space], default: `'html'`)
-  — whether `tree` is in the `'html'` or `'svg'` space, when an `<svg>`
-  element is found in the HTML space, this package already automatically
-  switches to and from the SVG space when entering and exiting it
-* `stylePropertyNameCase`
-  ([`StylePropertyNameCase`][api-style-property-name-case],
-  default: `'dom'`)
-  — specify casing to use for property names in `style` objects
-* `tableCellAlignToStyle`
-  (`boolean`, default: `true`)
-  — turn obsolete `align` props on `td` and `th` into CSS `style` props
 
 ### `Components`
 
@@ -385,6 +303,47 @@ Create a development element (TypeScript type).
 
 Element from your framework (`JSX.Element`).
 
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+* `Fragment` ([`Fragment`][api-fragment], required)
+  — fragment
+* `jsx` ([`Jsx`][api-jsx], required in production)
+  — dynamic JSX
+* `jsxs` ([`Jsx`][api-jsx], required in production)
+  — static JSX
+* `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
+  — development JSX
+* `components` ([`Partial<Components>`][api-components], optional)
+  — components to use
+* `createEvaluater` ([`CreateEvaluater`][api-create-evaluater], optional)
+  — create an evaluator that turns ESTree ASTs into values
+* `development` (`boolean`, default: `false`)
+  — whether to use `jsxDEV` when on or `jsx` and `jsxs` when off
+* `elementAttributeNameCase`
+  ([`ElementAttributeNameCase`][api-element-attribute-name-case],
+  default: `'react'`)
+  — specify casing to use for attribute names
+* `filePath` (`string`, optional)
+  — file path to the original source file, passed in source info to `jsxDEV`
+  when using the automatic runtime with `development: true`
+* `passNode` (`boolean`, default: `false`)
+  — pass the hast element node to components
+* `space` ([`Space`][api-space], default: `'html'`)
+  — whether `tree` is in the `'html'` or `'svg'` space, when an `<svg>`
+  element is found in the HTML space, this package already automatically
+  switches to and from the SVG space when entering and exiting it
+* `stylePropertyNameCase`
+  ([`StylePropertyNameCase`][api-style-property-name-case],
+  default: `'dom'`)
+  — specify casing to use for property names in `style` objects
+* `tableCellAlignToStyle`
+  (`boolean`, default: `true`)
+  — turn obsolete `align` props on `td` and `th` into CSS `style` props
+
 ### `Props`
 
 Properties and children (TypeScript type).
@@ -450,6 +409,63 @@ DOM casing is for example `backgroundColor` and `WebkitLineClamp`.
 type StylePropertyNameCase = 'css' | 'dom'
 ```
 
+## Errors
+
+The following errors are thrown:
+
+###### ``Expected `Fragment` in options``
+
+This error is thrown when either `options` is not passed at all or
+when `options.Fragment` is `undefined`.
+
+The automatic JSX runtime needs a symbol for a fragment to work.
+
+To solve the error, make sure you are passing the correct fragment symbol from
+your framework.
+
+###### `` Expected `jsxDEV` in options when `development: true` ``
+
+This error is thrown when `options.development` is turned on (`true`), but when
+`options.jsxDEV` is not a function.
+
+The automatic JSX runtime, in development, needs this function.
+
+To solve the error, make sure you are importing the correct runtime functions
+(for example, `'react/jsx-dev-runtime'`), and pass `jsxDEV`.
+
+###### ``Expected `jsx` in production options``
+
+###### ``Expected `jsxs` in production options``
+
+These errors are thrown when `options.development` is *not* turned on (`false`
+or not defined), and when `options.jsx` or `options.jsxs` are not functions.
+
+The automatic JSX runtime, in production, needs these functions.
+
+To solve the error, make sure you are importing the correct runtime functions
+(for example, `'react/jsx-runtime'`), and pass `jsx` and `jsxs`.
+
+###### `` Cannot handle MDX estrees without `createEvaluater` ``
+
+This error is thrown when MDX nodes are passed that represent JavaScript
+programs or expressions.
+
+Supporting JavaScript can be unsafe and requires a different project.
+To support JavaScript, pass a `createEvaluater` function in `options`.
+
+###### ``Cannot parse `style` attribute``
+
+This error is thrown when a `style` attribute is found on an element, which
+cannot be parsed as CSS.
+
+Most frameworks don’t accept `style` as a string, so we need to parse it as
+CSS, and pass it as an object.
+But when broken CSS is used, such as `style="color:red; /*"`, we crash.
+
+To solve the error, make sure authors write valid CSS.
+Alternatively, pass `options.ignoreInvalidStyle: true` to swallow these
+errors.
+
 ## Examples
 
 ### Example: Preact
@@ -499,56 +515,6 @@ render(
   }),
   document.getElementById('root')
 )
-```
-
-### Example: Vue
-
-> 👉 **Note**: you must set `elementAttributeNameCase: 'html'` for Vue.
-
-In Node.js, do:
-
-```js
-import serverRenderer from '@vue/server-renderer'
-import {h} from 'hastscript'
-import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
-import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
-
-console.log(
-  await serverRenderer.renderToString(
-    toJsxRuntime(h('h1', 'hi!'), {
-      Fragment,
-      jsx,
-      jsxs,
-      elementAttributeNameCase: 'html'
-    })
-  )
-)
-```
-
-Yields:
-
-```html
-<h1>hi!</h1>
-```
-
-In a browser, do:
-
-```js
-import {h} from 'https://esm.sh/hastscript@8'
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
-import {createApp} from 'https://esm.sh/vue@3'
-import {Fragment, jsx, jsxs} from 'https://esm.sh/vue@3/jsx-runtime'
-
-createApp(Component).mount('#root')
-
-function Component() {
-  return toJsxRuntime(h('h1', 'hi!'), {
-    Fragment,
-    jsx,
-    jsxs,
-    elementAttributeNameCase: 'html'
-  })
-}
 ```
 
 ### Example: Solid
@@ -624,35 +590,60 @@ Yields:
 [class Component extends SvelteComponent]
 ```
 
+### Example: Vue
+
+> 👉 **Note**: you must set `elementAttributeNameCase: 'html'` for Vue.
+
+In Node.js, do:
+
+```js
+import serverRenderer from '@vue/server-renderer'
+import {h} from 'hastscript'
+import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
+import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
+
+console.log(
+  await serverRenderer.renderToString(
+    toJsxRuntime(h('h1', 'hi!'), {
+      Fragment,
+      jsx,
+      jsxs,
+      elementAttributeNameCase: 'html'
+    })
+  )
+)
+```
+
+Yields:
+
+```html
+<h1>hi!</h1>
+```
+
+In a browser, do:
+
+```js
+import {h} from 'https://esm.sh/hastscript@8'
+import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
+import {createApp} from 'https://esm.sh/vue@3'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/vue@3/jsx-runtime'
+
+createApp(Component).mount('#root')
+
+function Component() {
+  return toJsxRuntime(h('h1', 'hi!'), {
+    Fragment,
+    jsx,
+    jsxs,
+    elementAttributeNameCase: 'html'
+  })
+}
+```
+
 ## Syntax
 
 HTML is parsed according to WHATWG HTML (the living standard), which is also
 followed by browsers such as Chrome, Firefox, and Safari.
-
-## Types
-
-This package is fully typed with [TypeScript][].
-It exports the additional types
-[`Components`][api-components],
-[`CreateEvaluater`][api-create-evaluater],
-[`ElementAttributeNameCase`][api-element-attribute-name-case],
-[`EvaluateExpression`][api-evaluate-expression],
-[`EvaluateProgram`][api-evaluate-program],
-[`Evaluater`][api-evaluater],
-[`ExtraProps`][api-extra-props],
-[`Fragment`][api-fragment],
-[`Jsx`][api-jsx],
-[`JsxDev`][api-jsx-dev],
-[`Options`][api-options],
-[`Props`][api-props],
-[`Source`][api-source],
-[`Space`][api-Space], and
-[`StylePropertyNameCase`][api-style-property-name-case].
-
-The function `toJsxRuntime` returns a `JSX.Element`, which means that the JSX
-namespace has to by typed.
-Typically this is done by installing your frameworks types (e.g.,
-`@types/react`), which you likely already have.
 
 ## Compatibility
 
