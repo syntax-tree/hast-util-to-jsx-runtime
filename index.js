@@ -1,19 +1,51 @@
 /**
- * @typedef {import('./lib/components.js').Components} Components
- * @typedef {import('./lib/components.js').ExtraProps} ExtraProps
- * @typedef {import('./lib/index.js').CreateEvaluater} CreateEvaluater
+ * @typedef {unknown} Components
+ * @typedef {unknown} ExtraProps
  * @typedef {import('./lib/index.js').ElementAttributeNameCase} ElementAttributeNameCase
- * @typedef {import('./lib/index.js').EvaluateExpression} EvaluateExpression
  * @typedef {import('./lib/index.js').EvaluateProgram} EvaluateProgram
- * @typedef {import('./lib/index.js').Evaluater} Evaluater
- * @typedef {import('./lib/index.js').Fragment} Fragment
- * @typedef {import('./lib/index.js').Jsx} Jsx
- * @typedef {import('./lib/index.js').JsxDev} JsxDev
- * @typedef {import('./lib/index.js').Options} Options
- * @typedef {import('./lib/index.js').Props} Props
+ * @typedef {unknown} Fragment
  * @typedef {import('./lib/index.js').Source} Source
  * @typedef {import('./lib/index.js').Space} Space
  * @typedef {import('./lib/index.js').StylePropertyNameCase} StylePropertyNameCase
+ */
+
+/**
+ * @typedef {import('./lib/index.js').CreateEvaluater<JSXElementType>} CreateEvaluater
+ * @template JSXElementType
+ */
+
+/**
+ * @typedef {import('./lib/index.js').EvaluateExpression<JSXElementType>} EvaluateExpression
+ * @template JSXElementType
+ */
+
+/**
+ * @typedef {import('./lib/index.js').Evaluater<JSXElementType>} Evaluater
+ * @template JSXElementType
+ */
+
+/**
+ * @typedef {import('./lib/index.js').Jsx<JSXElementType, JSXElement>} Jsx
+ * @template JSXElementType
+ * @template JSXElement
+ */
+
+/**
+ * @typedef {import('./lib/index.js').JsxDev<JSXElementType, JSXElement>} JsxDev
+ * @template JSXElementType
+ * @template JSXElement
+ */
+
+/**
+ * @typedef {import('./lib/index.js').Options<JSXElementType, JSXElement>} Options
+ * @template JSXElementType
+ * @template JSXElement
+ */
+
+/**
+ * @typedef {import('./lib/index.js').Props<JSXElement>} Props
+ * @template JSXElementType
+ * @template JSXElement
  */
 
 export {toJsxRuntime} from './lib/index.js'

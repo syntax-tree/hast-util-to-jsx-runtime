@@ -1,11 +1,7 @@
 /**
- * @typedef {import('estree').Expression} Expression
  * @typedef {import('estree').Program} Program
  *
- * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater} CreateEvaluater
- * @typedef {import('hast-util-to-jsx-runtime').Fragment} Fragment
- * @typedef {import('hast-util-to-jsx-runtime').Jsx} Jsx
- * @typedef {import('hast-util-to-jsx-runtime').JsxDev} JsxDev
+ * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater<React.ElementType>} CreateEvaluater
  *
  * @typedef {import('../lib/index.js').Source} Source
  */
@@ -17,24 +13,13 @@ import {h, s} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import * as sval from 'sval'
 import React from 'react'
-import * as dev from 'react/jsx-dev-runtime'
-import * as prod from 'react/jsx-runtime'
+import * as development from 'react/jsx-dev-runtime'
+import * as production from 'react/jsx-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
 
 /** @type {import('sval')['default']} */
 // @ts-expect-error: ESM types are wrong.
 const Sval = sval.default
-
-const production = /** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */ ({
-  Fragment: prod.Fragment,
-  jsx: prod.jsx,
-  jsxs: prod.jsxs
-})
-
-const development = /** @type {{Fragment: Fragment, jsxDEV: JsxDev}} */ ({
-  Fragment: dev.Fragment,
-  jsxDEV: dev.jsxDEV
-})
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
@@ -491,7 +476,7 @@ test('source', async function (t) {
   })
 
   /**
-   * @param {JSX.Element} node
+   * @param {React.ReactElement} node
    * @returns {Source | undefined}
    */
   function getSource(node) {
@@ -528,7 +513,7 @@ test('components', async function (t) {
           components: {
             b: class extends React.Component {
               /**
-               * @param {JSX.IntrinsicElements['b']} props
+               * @param {React.ComponentPropsWithoutRef<'b'>} props
                */
               constructor(props) {
                 super(props)
@@ -862,7 +847,6 @@ test('mdx: jsx', async function (t) {
           {
             ...production,
             components: {
-              // @ts-expect-error: untyped.
               'a:b': 'b'
             }
           }
@@ -1293,7 +1277,7 @@ function createEvaluater() {
       }
 
       interpreter.run(program)
-      const value = /** @type {unknown} */ (
+      const value = /** @type {React.ElementType} */ (
         // type-coverage:ignore-next-line
         interpreter.exports._evaluateExpressionValue
       )

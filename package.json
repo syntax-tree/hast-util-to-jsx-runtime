@@ -108,6 +108,7 @@
     "ignoreFiles": [
       "example/**/*.js"
     ],
+    "ignoreNested": true,
     "strict": true
   },
   "xo": {
