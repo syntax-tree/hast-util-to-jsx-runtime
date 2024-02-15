@@ -25,13 +25,16 @@ import {renderToStaticMarkup} from 'react-dom/server'
 // @ts-expect-error: ESM types are wrong.
 const Sval = sval.default
 
-/** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */
-// @ts-expect-error: the react types are missing.
-const production = {Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs}
+const production = /** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */ ({
+  Fragment: prod.Fragment,
+  jsx: prod.jsx,
+  jsxs: prod.jsxs
+})
 
-/** @type {{Fragment: Fragment, jsxDEV: JsxDev}} */
-// @ts-expect-error: the react types are missing.
-const development = {Fragment: dev.Fragment, jsxDEV: dev.jsxDEV}
+const development = /** @type {{Fragment: Fragment, jsxDEV: JsxDev}} */ ({
+  Fragment: dev.Fragment,
+  jsxDEV: dev.jsxDEV
+})
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
