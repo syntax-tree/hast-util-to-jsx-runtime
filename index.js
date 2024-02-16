@@ -10,42 +10,41 @@
  */
 
 /**
- * @template JSXElementType
- * @typedef {import('./lib/index.js').CreateEvaluater<JSXElementType>} CreateEvaluater
+ * @template [JsxElementType=any]
+ * @template [JsxProps=any]
+ * @template [JsxKey=any]
+ * @template [JsxElement=any]
+ * @typedef {import('./lib/index.js').Jsx} Jsx
  */
 
 /**
- * @template JSXElementType
- * @typedef {import('./lib/index.js').EvaluateExpression<JSXElementType>} EvaluateExpression
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').CreateEvaluater<JsxFunction>} CreateEvaluater
  */
 
 /**
- * @template JSXElementType
- * @typedef {import('./lib/index.js').Evaluater<JSXElementType>} Evaluater
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').EvaluateExpression<JsxFunction>} EvaluateExpression
  */
 
 /**
- * @template JSXElementType
- * @template JSXElement
- * @typedef {import('./lib/index.js').Jsx<JSXElementType, JSXElement>} Jsx
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').Evaluater<JsxFunction>} Evaluater
  */
 
 /**
- * @template JSXElementType
- * @template JSXElement
- * @typedef {import('./lib/index.js').JsxDev<JSXElementType, JSXElement>} JsxDev
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').JsxDev<JsxFunction>} JsxDev
  */
 
 /**
- * @template JSXElementType
- * @template JSXElement
- * @typedef {import('./lib/index.js').Options<JSXElementType, JSXElement>} Options
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').Options<JsxFunction>} Options
  */
 
 /**
- * @template JSXElementType
- * @template JSXElement
- * @typedef {import('./lib/index.js').Props<JSXElement>} Props
+ * @template {Jsx} [JsxFunction=Jsx]
+ * @typedef {import('./lib/index.js').Props<JsxFunction>} Props
  */
 
 export {toJsxRuntime} from './lib/index.js'

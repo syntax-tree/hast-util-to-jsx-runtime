@@ -1,7 +1,7 @@
 /**
  * @typedef {import('estree').Program} Program
  *
- * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater<React.ElementType>} CreateEvaluater
+ * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater<typeof production.jsx>} CreateEvaluater
  *
  * @typedef {import('../lib/index.js').Source} Source
  */
@@ -76,6 +76,7 @@ test('core', async function (t) {
     'should throw in development w/ `Fragment`, w/o `jsxDEV`',
     async function () {
       assert.throws(function () {
+        // @ts-expect-error: check how the development runtime handles `jsxDEV` missing.
         toJsxRuntime(h(), {Fragment: production.Fragment, development: true})
       }, /Expected `jsxDEV` in options when `development: true`/)
     }
@@ -249,9 +250,13 @@ test('properties', async function (t) {
           }),
           {
             ...production,
+            /**
+             * @param {React.ElementType} type
+             * @param {unknown} props
+             */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, {})
+              return production.jsx(type, props)
             },
             stylePropertyNameCase: 'css'
           }
@@ -494,7 +499,7 @@ test('components', async function (t) {
           ...production,
           components: {
             /**
-             * @param {{id: unknown}} props
+             * @param {{id: string}} props
              */
             b(props) {
               // Note: types for this are working.
@@ -544,9 +549,6 @@ test('components', async function (t) {
             ...production,
             passNode: true,
             components: {
-              /**
-               * @param {{node: unknown}} props
-               */
               b(props) {
                 assert.ok(props.node)
                 return 'a'
@@ -565,9 +567,6 @@ test('components', async function (t) {
         toJsxRuntime(h('b'), {
           ...production,
           components: {
-            /**
-             * @param {{node: unknown}} props
-             */
             b(props) {
               assert.equal(props.node, undefined)
               return 'a'
@@ -672,9 +671,13 @@ test('react specific: `align` to `style`', async function (t) {
         renderToStaticMarkup(
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
+            /**
+             * @param {React.ElementType} type
+             * @param {unknown} props
+             */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, {})
+              return production.jsx(type, props)
             },
             stylePropertyNameCase: 'css'
           })
@@ -696,9 +699,13 @@ test('react specific: `align` to `style`', async function (t) {
         renderToStaticMarkup(
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
+            /**
+             * @param {React.ElementType} type
+             * @param {unknown} props
+             */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, {})
+              return production.jsx(type, props)
             },
             stylePropertyNameCase: 'dom'
           })
