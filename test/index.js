@@ -493,6 +493,9 @@ test('components', async function (t) {
         toJsxRuntime(h('b#x'), {
           ...production,
           components: {
+            /**
+             * @param {{id: unknown}} props
+             */
             b(props) {
               // Note: types for this are working.
               assert(props.id === 'x')
@@ -541,6 +544,9 @@ test('components', async function (t) {
             ...production,
             passNode: true,
             components: {
+              /**
+               * @param {{node: unknown}} props
+               */
               b(props) {
                 assert.ok(props.node)
                 return 'a'
@@ -559,6 +565,9 @@ test('components', async function (t) {
         toJsxRuntime(h('b'), {
           ...production,
           components: {
+            /**
+             * @param {{node: unknown}} props
+             */
             b(props) {
               assert.equal(props.node, undefined)
               return 'a'
