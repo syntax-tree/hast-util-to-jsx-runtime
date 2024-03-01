@@ -19,31 +19,37 @@
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').CreateEvaluater<JsxFunction>} CreateEvaluater
  */
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').EvaluateExpression<JsxFunction>} EvaluateExpression
  */
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').Evaluater<JsxFunction>} Evaluater
  */
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').JsxDev<JsxFunction>} JsxDev
  */
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').Options<JsxFunction>} Options
  */
 
 /**
  * @template {Jsx} [JsxFunction=Jsx]
+ *   The type of the `jsx` function impoted from `${jsxImportSource}/jsx-runtime`.
  * @typedef {import('./lib/index.js').Props<JsxFunction>} Props
  */
 
