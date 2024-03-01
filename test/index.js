@@ -1,5 +1,6 @@
 /**
  * @typedef {import('estree').Program} Program
+ * @typedef {import('hast').Nodes} Nodes
  *
  * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater<typeof production.jsx>} CreateEvaluater
  *
@@ -549,6 +550,9 @@ test('components', async function (t) {
             ...production,
             passNode: true,
             components: {
+              /**
+               * @param {{ node: Nodes }} props
+               */
               b(props) {
                 assert.ok(props.node)
                 return 'a'
@@ -567,6 +571,9 @@ test('components', async function (t) {
         toJsxRuntime(h('b'), {
           ...production,
           components: {
+            /**
+             * @param {{ node: Nodes }} props
+             */
             b(props) {
               assert.equal(props.node, undefined)
               return 'a'
