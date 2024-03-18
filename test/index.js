@@ -257,7 +257,7 @@ test('properties', async function (t) {
              */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, props)
+              return production.jsx(type, {})
             },
             stylePropertyNameCase: 'css'
           }
@@ -684,7 +684,7 @@ test('react specific: `align` to `style`', async function (t) {
              */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, props)
+              return production.jsx(type, {})
             },
             stylePropertyNameCase: 'css'
           })
@@ -712,7 +712,7 @@ test('react specific: `align` to `style`', async function (t) {
              */
             jsx(type, props) {
               foundProps = props
-              return production.jsx(type, props)
+              return production.jsx(type, {})
             },
             stylePropertyNameCase: 'dom'
           })
