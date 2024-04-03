@@ -1292,6 +1292,7 @@ function createEvaluater() {
         sourceType: 'module'
       }
 
+      // @ts-expect-error: note: `sval` types are wrong, programs are nodes.
       interpreter.run(program)
       const value = /** @type {unknown} */ (
         // type-coverage:ignore-next-line
@@ -1317,6 +1318,7 @@ function createEvaluater() {
         }
       })
 
+      // @ts-expect-error: note: `sval` types are wrong, programs are nodes.
       interpreter.run(program)
     }
   }
