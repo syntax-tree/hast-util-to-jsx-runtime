@@ -587,7 +587,6 @@ test('components', async function (t) {
         toJsxRuntime(h('h1', 'a'), {
           ...production,
           passNode: true,
-          // @ts-expect-error: to do: investigate.
           components: {h1: 'h2'}
         })
       ),
@@ -839,7 +838,6 @@ test('mdx: jsx', async function (t) {
       renderToStaticMarkup(
         toJsxRuntime(
           {type: 'mdxJsxTextElement', name: 'a', attributes: [], children: []},
-          // @ts-expect-error: to do: investigate.
           {...production, components: {a: 'b'}}
         )
       ),
