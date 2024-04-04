@@ -1,13 +1,20 @@
 /**
- * @typedef {import('estree').Expression} Expression
  * @typedef {import('estree').Program} Program
  *
  * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater} CreateEvaluater
  * @typedef {import('hast-util-to-jsx-runtime').Fragment} Fragment
- * @typedef {import('hast-util-to-jsx-runtime').Jsx} Jsx
- * @typedef {import('hast-util-to-jsx-runtime').JsxDev} JsxDev
  *
  * @typedef {import('../lib/index.js').Source} Source
+ * @typedef {import('hast-util-to-jsx-runtime').Jsx<JsxElement>} Jsx
+ * @typedef {import('hast-util-to-jsx-runtime').JsxDev<JsxElement>} JsxDev
+ */
+
+/**
+ * @typedef {import('react').JSX.Element} JsxElement
+ */
+
+/**
+ * @typedef {import('react').JSX.IntrinsicElements} JsxIntrinsicElements
  */
 
 import assert from 'node:assert/strict'
@@ -17,24 +24,13 @@ import {h, s} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
 import * as sval from 'sval'
 import React from 'react'
-import * as dev from 'react/jsx-dev-runtime'
-import * as prod from 'react/jsx-runtime'
+import * as development from 'react/jsx-dev-runtime'
+import * as production from 'react/jsx-runtime'
 import {renderToStaticMarkup} from 'react-dom/server'
 
 /** @type {import('sval')['default']} */
 // @ts-expect-error: ESM types are wrong.
 const Sval = sval.default
-
-const production = /** @type {{Fragment: Fragment, jsx: Jsx, jsxs: Jsx}} */ ({
-  Fragment: prod.Fragment,
-  jsx: prod.jsx,
-  jsxs: prod.jsxs
-})
-
-const development = /** @type {{Fragment: Fragment, jsxDEV: JsxDev}} */ ({
-  Fragment: dev.Fragment,
-  jsxDEV: dev.jsxDEV
-})
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
@@ -491,7 +487,7 @@ test('source', async function (t) {
   })
 
   /**
-   * @param {JSX.Element} node
+   * @param {JsxElement} node
    * @returns {Source | undefined}
    */
   function getSource(node) {
@@ -528,7 +524,7 @@ test('components', async function (t) {
           components: {
             b: class extends React.Component {
               /**
-               * @param {JSX.IntrinsicElements['b']} props
+               * @param {JsxIntrinsicElements['b']} props
                */
               constructor(props) {
                 super(props)
@@ -591,6 +587,7 @@ test('components', async function (t) {
         toJsxRuntime(h('h1', 'a'), {
           ...production,
           passNode: true,
+          // @ts-expect-error: to do: investigate.
           components: {h1: 'h2'}
         })
       ),
@@ -842,6 +839,7 @@ test('mdx: jsx', async function (t) {
       renderToStaticMarkup(
         toJsxRuntime(
           {type: 'mdxJsxTextElement', name: 'a', attributes: [], children: []},
+          // @ts-expect-error: to do: investigate.
           {...production, components: {a: 'b'}}
         )
       ),
