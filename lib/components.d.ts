@@ -31,8 +31,8 @@ export type ClassComponent<JsxElementClass, ComponentProps> = new (
 /**
  * Function or class component.
  *
- * You can access props at `LocalJsx.IntrinsicElements`.
- * For example, to find props for `a`, use `LocalJsx.IntrinsicElements['a']`.
+ * You can access props at `JsxIntrinsicElements`.
+ * For example, to find props for `a`, use `JsxIntrinsicElements['a']`.
  *
  * @typeParam ComponentProps
  *   Props type.
@@ -49,12 +49,12 @@ export type ExtraProps = {node?: Element | undefined}
 /**
  * Possible components to use.
  *
- * Each key is a tag name typed in `LocalJsx.IntrinsicElements`.
+ * Each key is a tag name typed in `JsxIntrinsicElements`.
  * Each value is either a different tag name, or a component accepting the
  * corresponding props (and an optional `node` prop if `passNode` is on).
  *
- * You can access props at `LocalJsx.IntrinsicElements`.
- * For example, to find props for `a`, use `LocalJsx.IntrinsicElements['a']`.
+ * You can access props at `JsxIntrinsicElements`.
+ * For example, to find props for `a`, use `JsxIntrinsicElements['a']`.
  */
 // Note: this type has to be in `.ts` or `.d.ts`, otherwise TSC hardcodes
 // react into the `.d.ts` file.
