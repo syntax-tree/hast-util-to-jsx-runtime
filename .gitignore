@@ -4,5 +4,7 @@
 coverage/
 node_modules/
 yarn.lock
-example/hast-util-to-jsx-runtime.min.js
-!lib/components.d.ts
+/example/hast-util-to-jsx-runtime.min.js
+!/lib/types.d.ts
+!/index.d.ts
+!/types.d.ts

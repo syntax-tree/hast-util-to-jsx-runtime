@@ -1,13 +1,6 @@
 /**
- * @typedef {import('estree').Expression} Expression
- * @typedef {import('estree').Program} Program
- *
- * @typedef {import('hast-util-to-jsx-runtime').CreateEvaluater} CreateEvaluater
- * @typedef {import('hast-util-to-jsx-runtime').Fragment} Fragment
- * @typedef {import('hast-util-to-jsx-runtime').Jsx} Jsx
- * @typedef {import('hast-util-to-jsx-runtime').JsxDev} JsxDev
- *
- * @typedef {import('../lib/index.js').Source} Source
+ * @import {Program} from 'estree'
+ * @import {CreateEvaluater, Fragment, Jsx, JsxDev, Source} from 'hast-util-to-jsx-runtime'
  */
 
 import assert from 'node:assert/strict'
