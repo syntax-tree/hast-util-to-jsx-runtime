@@ -2,6 +2,7 @@
 *.d.ts.map
 *.d.ts
 *.log
+*.tsbuildinfo
 coverage/
 node_modules/
 yarn.lock
