@@ -245,6 +245,13 @@ export function createTree() {
     ),
     h('h2', 'xml:lang'),
     h('style', ':lang(fr) { color: #0366d6; }'),
-    h('p', {xmlLang: 'fr'}, "C'est bleu ? Ensuite ça marche")
+    h('p', {xmlLang: 'fr'}, 'C’est bleu ? Ensuite ça marche'),
+    h('h2', 'Custom elements'),
+    h('style', '.custom-element-class-name { color: #0366d6; }'),
+    h(
+      'some-element',
+      {className: ['custom-element-class-name']},
+      'Does it work?'
+    )
   ])
 }
