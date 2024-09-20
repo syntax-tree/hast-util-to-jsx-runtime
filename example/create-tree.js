@@ -6,7 +6,8 @@
 
 /* eslint-env browser */
 
-import {h, s} from 'https://esm.sh/hastscript@8?dev'
+// To do: note: update this once in a while.
+import {h, s} from 'https://esm.sh/hastscript@9?dev'
 
 export function createTree() {
   return h('div', [
