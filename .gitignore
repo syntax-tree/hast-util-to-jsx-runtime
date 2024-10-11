@@ -9,4 +9,5 @@ yarn.lock
 /example/hast-util-to-jsx-runtime.min.js
 !/lib/types.d.ts
 !/index.d.ts
-!/types.d.ts
+!/types-esmsh.d.ts
+!/types-jsx.d.ts

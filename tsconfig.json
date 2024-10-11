@@ -12,5 +12,11 @@
     "target": "es2022"
   },
   "exclude": ["coverage/", "node_modules/"],
-  "include": ["**/**.js", "lib/types.d.ts", "index.d.ts", "types.d.ts"]
+  "include": [
+    "**/**.js",
+    "lib/types.d.ts",
+    "index.d.ts",
+    "types-esmsh.d.ts",
+    "types-jsx.d.ts"
+  ]
 }

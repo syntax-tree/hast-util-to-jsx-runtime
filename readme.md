@@ -108,6 +108,22 @@ Yields:
 <h1>Hello, world!</h1>
 ```
 
+> **Note**:
+> To add proper type support in React\@19,
+> register a global JSX namespace:
+>
+> ```ts
+> import type {JSX as Jsx} from 'react/jsx-runtime'
+>
+> declare global {
+>   namespace JSX {
+>     type ElementClass = Jsx.ElementClass
+>     type Element = Jsx.Element
+>     type IntrinsicElements = Jsx.IntrinsicElements
+>   }
+> }
+> ```
+
 ## API
 
 This package exports the identifier [`toJsxRuntime`][api-to-jsx-runtime].
@@ -517,6 +533,21 @@ render(
 )
 ```
 
+To add proper type support,
+register a global JSX namespace:
+
+```ts
+import type {JSX as Jsx} from 'preact/jsx-runtime'
+
+declare global {
+  namespace JSX {
+    type ElementClass = Jsx.ElementClass
+    type Element = Jsx.Element
+    type IntrinsicElements = Jsx.IntrinsicElements
+  }
+}
+```
+
 ### Example: Solid
 
 > 👉 **Note**: you must set `elementAttributeNameCase: 'html'` and
@@ -567,6 +598,21 @@ function Component() {
 }
 ```
 
+To add proper type support,
+register a global JSX namespace:
+
+```ts
+import type {JSX as Jsx} from 'solid-js/jsx-runtime'
+
+declare global {
+  namespace JSX {
+    type ElementClass = Jsx.ElementClass
+    type Element = Jsx.Element
+    type IntrinsicElements = Jsx.IntrinsicElements
+  }
+}
+```
+
 ### Example: Svelte
 
 <!-- To do: improve svelte when it fixes a bunch of bugs. -->
@@ -590,6 +636,9 @@ Yields:
 [class Component extends SvelteComponent]
 ```
 
+Types for Svelte are broken.
+Raise it with Svelte.
+
 ### Example: Vue
 
 > 👉 **Note**: you must set `elementAttributeNameCase: 'html'` for Vue.
@@ -600,7 +649,7 @@ In Node.js, do:
 import serverRenderer from '@vue/server-renderer'
 import {h} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
-import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@^3.3.0-alpha.6`.
+import {Fragment, jsx, jsxs} from 'vue/jsx-runtime' // Available since `vue@3.3`.
 
 console.log(
   await serverRenderer.renderToString(
@@ -640,6 +689,21 @@ function Component() {
 }
 ```
 
+To add proper type support,
+register a global JSX namespace:
+
+```ts
+import type {JSX as Jsx} from 'vue/jsx-runtime'
+
+declare global {
+  namespace JSX {
+    type ElementClass = Jsx.ElementClass
+    type Element = Jsx.Element
+    type IntrinsicElements = Jsx.IntrinsicElements
+  }
+}
+```
+
 ## Syntax
 
 HTML is parsed according to WHATWG HTML (the living standard), which is also
@@ -653,7 +717,7 @@ versions of Node.js.
 When we cut a new major release, we drop support for unmaintained versions of
 Node.
 This means we try to keep the current release line,
-`hast-util-to-jsx-runtime@^2`, compatible with Node.js 16.
+`hast-util-to-jsx-runtime@2`, compatible with Node.js 16.
 
 ## Security
 
