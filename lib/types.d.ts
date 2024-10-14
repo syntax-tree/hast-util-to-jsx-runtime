@@ -141,7 +141,9 @@ type FunctionComponent<ComponentProps> = (
  * Create a production element.
  */
 export type Jsx = (
-  type: unknown,
+  // `any` because runtimes often have complex framework-specific types here.
+  // type-coverage:ignore-next-line
+  type: any,
   props: Props,
   key?: string | undefined
 ) => JSX.Element
@@ -150,7 +152,9 @@ export type Jsx = (
  * Create a development element.
  */
 export type JsxDev = (
-  type: unknown,
+  // `any` because runtimes often have complex framework-specific types here.
+  // type-coverage:ignore-next-line
+  type: any,
   props: Props,
   key: string | undefined,
   isStaticChildren: boolean,

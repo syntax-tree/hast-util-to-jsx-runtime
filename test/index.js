@@ -257,6 +257,9 @@ test('properties', async function (t) {
           }),
           {
             ...production,
+            /**
+             * @param {unknown} type
+             */
             jsx(type, props) {
               foundProps = props
               return production.jsx(type, {})
@@ -671,6 +674,9 @@ test('react specific: `align` to `style`', async function (t) {
         renderToStaticMarkup(
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
+            /**
+             * @param {unknown} type
+             */
             jsx(type, props) {
               foundProps = props
               return production.jsx(type, {})
@@ -695,6 +701,9 @@ test('react specific: `align` to `style`', async function (t) {
         renderToStaticMarkup(
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
+            /**
+             * @param {unknown} type
+             */
             jsx(type, props) {
               foundProps = props
               return production.jsx(type, {})
