@@ -15,7 +15,7 @@
     "mdast-util-mdx-expression": "^2.0.0",
     "mdast-util-mdx-jsx": "^3.0.0",
     "mdast-util-mdxjs-esm": "^2.0.0",
-    "property-information": "^6.0.0",
+    "property-information": "^7.0.0",
     "space-separated-tokens": "^2.0.0",
     "style-to-object": "^1.0.0",
     "unist-util-position": "^5.0.0",
