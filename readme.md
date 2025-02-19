@@ -1,12 +1,9 @@
 # hast-util-to-jsx-runtime
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
 
 hast utility to transform a tree to preact, react, solid, svelte, vue, etc.,
 with an automatic JSX runtime.
@@ -49,9 +46,9 @@ with an automatic JSX runtime.
 
 ## What is this?
 
-This package is a utility that takes a [hast][] tree and an
-[automatic JSX runtime][jsx-runtime] and turns the tree into anything you
-wish.
+This package is a utility that takes a [hast][github-hast] tree and an
+[automatic JSX runtime][reactjs-jsx-runtime] and turns the tree into anything
+you wish.
 
 ## When should I use this?
 
@@ -66,8 +63,8 @@ development, and have guaranteed support for fragments.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 16+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+), install with [npm][npmjs-install]:
 
 ```sh
 npm install hast-util-to-jsx-runtime
@@ -152,7 +149,7 @@ automatic JSX runtime.
 
 ##### Parameters
 
-* `tree` ([`Node`][node])
+* `tree` ([`Node`][github-hast-nodes])
   — tree to transform
 * `options` ([`Options`][api-options], required)
   — configuration
@@ -722,7 +719,7 @@ This means we try to keep the current release line,
 ## Security
 
 Be careful with user input in your hast tree.
-Use [`hast-util-santize`][hast-util-sanitize] to make hast trees safe.
+Use [`hast-util-santize`][github-hast-util-sanitize] to make hast trees safe.
 
 ## Related
 
@@ -730,80 +727,27 @@ Use [`hast-util-santize`][hast-util-sanitize] to make hast trees safe.
   — build hast trees
 * [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
   — serialize hast as HTML
-* [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
+* [`hast-util-sanitize`][github-hast-util-sanitize]
   — sanitize hast
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
-ways to get started.
-See [`support.md`][support] for ways to get help.
+See [`contributing.md`][health-contributing]
+in
+[`syntax-tree/.github`][health]
+for ways to get started.
+See [`support.md`][health-support] for ways to get help.
 
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+This project has a [code of conduct][health-coc].
+By interacting with this repository,
+organization,
+or community you agree to abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][wooorm]
 
 <!-- Definitions -->
-
-[build-badge]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/workflows/main/badge.svg
-
-[build]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/actions
-
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-jsx-runtime.svg
-
-[coverage]: https://codecov.io/github/syntax-tree/hast-util-to-jsx-runtime
-
-[downloads-badge]: https://img.shields.io/npm/dm/hast-util-to-jsx-runtime.svg
-
-[downloads]: https://www.npmjs.com/package/hast-util-to-jsx-runtime
-
-[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-to-jsx-runtime
-
-[size]: https://bundlejs.com/?q=hast-util-to-jsx-runtime
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/syntax-tree/unist/discussions
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[typescript]: https://www.typescriptlang.org
-
-[license]: license
-
-[author]: https://wooorm.com
-
-[health]: https://github.com/syntax-tree/.github
-
-[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
-
-[support]: https://github.com/syntax-tree/.github/blob/main/support.md
-
-[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
-
-[hast]: https://github.com/syntax-tree/hast
-
-[node]: https://github.com/syntax-tree/hast#nodes
-
-[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
-
-[jsx-runtime]: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
-
-[api-to-jsx-runtime]: #tojsxruntimetree-options
 
 [api-components]: #components
 
@@ -834,3 +778,49 @@ abide by its terms.
 [api-space]: #space
 
 [api-style-property-name-case]: #stylepropertynamecase
+
+[api-to-jsx-runtime]: #tojsxruntimetree-options
+
+[badge-build-image]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/workflows/main/badge.svg
+
+[badge-build-url]: https://github.com/syntax-tree/hast-util-to-jsx-runtime/actions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-jsx-runtime.svg
+
+[badge-coverage-url]: https://codecov.io/github/syntax-tree/hast-util-to-jsx-runtime
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/hast-util-to-jsx-runtime.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/hast-util-to-jsx-runtime
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/hast-util-to-jsx-runtime
+
+[badge-size-url]: https://bundlejs.com/?q=hast-util-to-jsx-runtime
+
+[esmsh]: https://esm.sh
+
+[file-license]: license
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-hast]: https://github.com/syntax-tree/hast
+
+[github-hast-nodes]: https://github.com/syntax-tree/hast#nodes
+
+[github-hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[health]: https://github.com/syntax-tree/.github
+
+[health-coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
+
+[health-contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
+
+[health-support]: https://github.com/syntax-tree/.github/blob/main/support.md
+
+[npmjs-install]: https://docs.npmjs.com/cli/install
+
+[reactjs-jsx-runtime]: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
+
+[typescript]: https://www.typescriptlang.org
+
+[wooorm]: https://wooorm.com

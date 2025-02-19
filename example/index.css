@@ -27,7 +27,8 @@ input {
 }
 
 code {
-  font-family: 'San Francisco Mono', 'Monaco', 'Consolas', 'Lucida Console',
+  font-family:
+    'San Francisco Mono', 'Monaco', 'Consolas', 'Lucida Console',
     'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
   font-feature-settings: normal;
   font-size: smaller;
