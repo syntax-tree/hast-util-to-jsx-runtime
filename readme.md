@@ -106,7 +106,7 @@ Yields:
 ```
 
 > **Note**:
-> To add proper type support in React\@19,
+> To add proper type support in React 19,
 > register a global JSX namespace:
 >
 > ```ts

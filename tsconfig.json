@@ -8,6 +8,8 @@
     "exactOptionalPropertyTypes": true,
     "lib": ["es2022"],
     "module": "node16",
+    // Needed because `@types/react-dom` is currently broken.
+    "skipLibCheck": true,
     "strict": true,
     "target": "es2022"
   },
