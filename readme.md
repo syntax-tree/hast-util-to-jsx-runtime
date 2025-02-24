@@ -109,7 +109,7 @@ Yields:
 ```
 
 > **Note**:
-> To add proper type support in React 19,
+> to add better type support,
 > register a global JSX namespace:
 >
 > ```ts
@@ -163,13 +163,16 @@ with an automatic JSX runtime.
 
 ##### Returns
 
-Result from your configured JSX runtime (`JSX.Element`).
+Result from your configured JSX runtime
+(`JSX.Element` if defined,
+otherwise `unknown` which you can cast yourself).
 
 ### `Components`
 
 Possible components to use (TypeScript type).
 
-Each key is a tag name typed in `JSX.IntrinsicElements`.
+Each key is a tag name typed in `JSX.IntrinsicElements`,
+if defined.
 Each value is either a different tag name
 or a component accepting the corresponding props
 (and an optional `node` prop if `passNode` is on).
@@ -184,13 +187,13 @@ use `JSX.IntrinsicElements['a']`.
 ```ts
 import type {Element} from 'hast'
 
+type ExtraProps = {node?: Element | undefined}
+
 type Components = {
   [TagName in keyof JSX.IntrinsicElements]:
     | Component<JSX.IntrinsicElements[TagName] & ExtraProps>
     | keyof JSX.IntrinsicElements
 }
-
-type ExtraProps = {node?: Element | undefined}
 
 type Component<ComponentProps> =
   // Class component:
@@ -308,7 +311,9 @@ Create a production element (TypeScript type).
 
 ###### Returns
 
-Element from your framework (`JSX.Element`).
+Element from your framework
+(`JSX.Element` if defined,
+otherwise `unknown` which you can cast yourself).
 
 ### `JsxDev`
 
@@ -338,7 +343,9 @@ Create a development element (TypeScript type).
 
 ###### Returns
 
-Element from your framework (`JSX.Element`).
+Element from your framework
+(`JSX.Element` if defined,
+otherwise `unknown` which you can cast yourself).
 
 ### `Options`
 
@@ -348,12 +355,12 @@ Configuration (TypeScript type).
 
 * `Fragment` ([`Fragment`][api-fragment], required)
   — fragment
-* `jsx` ([`Jsx`][api-jsx], required in production)
-  — dynamic JSX
-* `jsxs` ([`Jsx`][api-jsx], required in production)
-  — static JSX
 * `jsxDEV` ([`JsxDev`][api-jsx-dev], required in development)
   — development JSX
+* `jsxs` ([`Jsx`][api-jsx], required in production)
+  — static JSX
+* `jsx` ([`Jsx`][api-jsx], required in production)
+  — dynamic JSX
 * `components` ([`Partial<Components>`][api-components], optional)
   — components to use
 * `createEvaluater` ([`CreateEvaluater`][api-create-evaluater], optional)
@@ -574,7 +581,7 @@ render(
 )
 ```
 
-To add proper type support,
+To add better type support,
 register a global JSX namespace:
 
 ```ts
@@ -642,7 +649,7 @@ function Component() {
 }
 ```
 
-To add proper type support,
+To add better type support,
 register a global JSX namespace:
 
 ```ts
@@ -736,7 +743,7 @@ function Component() {
 }
 ```
 
-To add proper type support,
+To add better type support,
 register a global JSX namespace:
 
 ```ts

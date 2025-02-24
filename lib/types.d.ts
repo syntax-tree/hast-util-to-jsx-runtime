@@ -9,7 +9,7 @@ import type {Schema} from 'property-information'
 /**
  * Child.
  */
-export type Child = JSX.Element | string | null | undefined
+export type Child = JsxElement | string | null | undefined
 
 /**
  * Possible components to use.
@@ -24,16 +24,16 @@ export type Child = JSX.Element | string | null | undefined
 // Note: this type has to be in `.ts` or `.d.ts`, otherwise TSC hardcodes
 // react into the `.d.ts` file.
 export type Components = {
-  [TagName in keyof JSX.IntrinsicElements]:
-    | Component<JSX.IntrinsicElements[TagName] & ExtraProps>
-    | keyof JSX.IntrinsicElements
+  [TagName in keyof JsxIntrinsicElements]:
+    | Component<JsxIntrinsicElements[TagName] & ExtraProps>
+    | keyof JsxIntrinsicElements
 }
 
 /**
  * Function or class component.
  *
- * You can access props at `JSX.IntrinsicElements`.
- * For example, to find props for `a`, use `JSX.IntrinsicElements['a']`.
+ * You can access props at `JsxIntrinsicElements`.
+ * For example, to find props for `a`, use `JsxIntrinsicElements['a']`.
  *
  * @typeParam ComponentProps
  *   Props type.
@@ -55,7 +55,7 @@ export type Create = (
   type: unknown,
   props: Props,
   key: string | undefined
-) => JSX.Element
+) => JsxElement
 
 /**
  * Class component: given props, returns an instance.
@@ -69,7 +69,7 @@ export type Create = (
  */
 type ClassComponent<ComponentProps> = new (
   props: ComponentProps
-) => JSX.ElementClass
+) => JsxElementClass
 
 /**
  * Casing to use for attribute names.
@@ -135,18 +135,31 @@ export type Fragment = unknown
  */
 type FunctionComponent<ComponentProps> = (
   props: ComponentProps
-) => JSX.Element | string | null | undefined
+) => JsxElement | string | null | undefined
 
 /**
- * Create a production element.
+ * Conditional type for a class.
  */
-export type Jsx = (
-  // `any` because runtimes often have complex framework-specific types here.
-  // type-coverage:ignore-next-line
-  type: any,
-  props: Props,
-  key?: string | undefined
-) => JSX.Element
+// @ts-ignore: conditionally defined.
+export type JsxElementClass = any extends JSX.ElementClass
+  ? unknown
+  : // @ts-ignore: conditionally defined.
+    JSX.ElementClass
+
+/**
+ * Conditional type for a node object.
+ */
+// @ts-ignore: conditionally defined.
+export type JsxElement = any extends JSX.Element ? unknown : JSX.Element
+
+/**
+ * Conditional type for a record of tag names to corresponding props.
+ */
+// @ts-ignore: conditionally defined.
+export type JsxIntrinsicElements = any extends JSX.IntrinsicElements
+  ? Record<PropertyKey, any>
+  : // @ts-ignore: conditionally defined.
+    JSX.IntrinsicElements
 
 /**
  * Create a development element.
@@ -160,7 +173,18 @@ export type JsxDev = (
   isStaticChildren: boolean,
   source: Source,
   self: undefined
-) => JSX.Element
+) => JsxElement
+
+/**
+ * Create a production element.
+ */
+export type Jsx = (
+  // `any` because runtimes often have complex framework-specific types here.
+  // type-coverage:ignore-next-line
+  type: any,
+  props: Props,
+  key?: string | undefined
+) => JsxElement
 
 /**
  * Configuration.
@@ -233,10 +257,6 @@ export interface OptionsDevelopment extends OptionsBase {
    */
   development: true
   /**
-   * Dynamic JSX (optional).
-   */
-  jsx?: Jsx | null | undefined
-  /**
    * Development JSX.
    */
   jsxDEV: JsxDev
@@ -244,6 +264,10 @@ export interface OptionsDevelopment extends OptionsBase {
    * Static JSX (optional).
    */
   jsxs?: Jsx | null | undefined
+  /**
+   * Dynamic JSX (optional).
+   */
+  jsx?: Jsx | null | undefined
 }
 
 /**
@@ -259,10 +283,6 @@ export interface OptionsProduction extends OptionsBase {
    */
   development?: false | null | undefined
   /**
-   * Dynamic JSX.
-   */
-  jsx: Jsx
-  /**
    * Development JSX (optional).
    */
   jsxDEV?: JsxDev | null | undefined
@@ -270,6 +290,10 @@ export interface OptionsProduction extends OptionsBase {
    * Static JSX.
    */
   jsxs: Jsx
+  /**
+   * Dynamic JSX.
+   */
+  jsx: Jsx
 }
 
 /**

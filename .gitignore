@@ -10,4 +10,3 @@ yarn.lock
 !/lib/types.d.ts
 !/index.d.ts
 !/types-esmsh.d.ts
-!/types-jsx.d.ts
