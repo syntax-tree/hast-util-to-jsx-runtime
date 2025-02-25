@@ -140,26 +140,26 @@ type FunctionComponent<ComponentProps> = (
 /**
  * Conditional type for a class.
  */
-// @ts-ignore: conditionally defined.
-export type JsxElementClass = any extends JSX.ElementClass
-  ? unknown
-  : // @ts-ignore: conditionally defined.
-    JSX.ElementClass
+// @ts-ignore: conditionally defined;
+// it used to be possible to detect that with `any extends X ? X : Y`
+// but no longer.
+export type JsxElementClass = JSX.ElementClass
 
 /**
  * Conditional type for a node object.
  */
-// @ts-ignore: conditionally defined.
-export type JsxElement = any extends JSX.Element ? unknown : JSX.Element
+// @ts-ignore: conditionally defined;
+// it used to be possible to detect that with `any extends X ? X : Y`
+// but no longer.
+export type JsxElement = JSX.Element
 
 /**
  * Conditional type for a record of tag names to corresponding props.
  */
-// @ts-ignore: conditionally defined.
-export type JsxIntrinsicElements = any extends JSX.IntrinsicElements
-  ? Record<PropertyKey, any>
-  : // @ts-ignore: conditionally defined.
-    JSX.IntrinsicElements
+// @ts-ignore: conditionally defined;
+// it used to be possible to detect that with `any extends X ? X : Y`
+// but no longer.
+export type JsxIntrinsicElements = JSX.IntrinsicElements
 
 /**
  * Create a development element.

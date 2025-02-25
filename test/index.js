@@ -30,11 +30,7 @@ test('core', async function (t) {
     'should support a production runtime (default)',
     async function () {
       assert.equal(
-        renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(h('a', {b: 'c'}, 'd'), production)
-          )
-        ),
+        renderToStaticMarkup(toJsxRuntime(h('a', {b: 'c'}, 'd'), production)),
         '<a b="c">d</a>'
       )
     }
@@ -43,12 +39,10 @@ test('core', async function (t) {
   await t.test('should support a development runtime', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('a', {b: 'c'}, 'd'), {
-            ...development,
-            development: true
-          })
-        )
+        toJsxRuntime(h('a', {b: 'c'}, 'd'), {
+          ...development,
+          development: true
+        })
       ),
       '<a b="c">d</a>'
     )
@@ -88,92 +82,56 @@ test('core', async function (t) {
   )
 
   await t.test('should support a root (1)', async function () {
-    const node = /** @type {React.JSX.Element} */ (
-      toJsxRuntime(h(null, 'd'), production)
-    )
+    const node = toJsxRuntime(h(null, 'd'), production)
 
-    assert.equal(
-      // type-coverage:ignore-next-line
-      node.type,
-      production.Fragment
-    )
+    assert.equal(node.type, production.Fragment)
   })
 
   await t.test('should support a root (2)', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h(null, 'a'), production)
-        )
-      ),
+      renderToStaticMarkup(toJsxRuntime(h(null, 'a'), production)),
       'a'
     )
   })
 
   await t.test('should support a text (1)', async function () {
-    const node = /** @type {React.JSX.Element} */ (
-      toJsxRuntime({type: 'text', value: 'a'}, production)
-    )
+    const node = toJsxRuntime({type: 'text', value: 'a'}, production)
 
-    assert.equal(
-      // type-coverage:ignore-next-line
-      node.type,
-      production.Fragment
-    )
+    assert.equal(node.type, production.Fragment)
   })
 
   await t.test('should support a text (2)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime({type: 'text', value: 'a'}, production)
-        )
+        toJsxRuntime({type: 'text', value: 'a'}, production)
       ),
       'a'
     )
   })
 
   await t.test('should support a doctype (1)', async function () {
-    const node = /** @type {React.JSX.Element} */ (
-      toJsxRuntime({type: 'doctype'}, production)
-    )
+    const node = toJsxRuntime({type: 'doctype'}, production)
 
-    assert.equal(
-      // type-coverage:ignore-next-line
-      node.type,
-      production.Fragment
-    )
+    assert.equal(node.type, production.Fragment)
   })
 
   await t.test('should support a doctype (2)', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime({type: 'doctype'}, production)
-        )
-      ),
+      renderToStaticMarkup(toJsxRuntime({type: 'doctype'}, production)),
       ''
     )
   })
 
   await t.test('should support a comment (1)', async function () {
-    const node = /** @type {React.JSX.Element} */ (
-      toJsxRuntime({type: 'comment', value: 'a'}, production)
-    )
+    const node = toJsxRuntime({type: 'comment', value: 'a'}, production)
 
-    assert.equal(
-      // type-coverage:ignore-next-line
-      node.type,
-      production.Fragment
-    )
+    assert.equal(node.type, production.Fragment)
   })
 
   await t.test('should support a comment (2)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime({type: 'comment', value: 'a'}, production)
-        )
+        toJsxRuntime({type: 'comment', value: 'a'}, production)
       ),
       ''
     )
@@ -184,31 +142,29 @@ test('properties', async function (t) {
   await t.test('should support a bunch of properties', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'element',
-              tagName: 'div',
-              properties: {
-                id: 'a',
-                title: 'b',
-                className: ['c'],
-                // Known comma-separated lists:
-                accept: ['.jpg', '.jpeg'],
-                ariaValueNow: 1,
-                dataFoo: true,
-                data123: true,
-                dataFooBar: true,
-                allowFullScreen: true,
-                download: true,
-                dataA: false,
-                dataB: undefined,
-                dataC: null
-              },
-              children: []
+        toJsxRuntime(
+          {
+            type: 'element',
+            tagName: 'div',
+            properties: {
+              id: 'a',
+              title: 'b',
+              className: ['c'],
+              // Known comma-separated lists:
+              accept: ['.jpg', '.jpeg'],
+              ariaValueNow: 1,
+              dataFoo: true,
+              data123: true,
+              dataFooBar: true,
+              allowFullScreen: true,
+              download: true,
+              dataA: false,
+              dataB: undefined,
+              dataC: null
             },
-            production
-          )
+            children: []
+          },
+          production
         )
       ),
       '<div id="a" title="b" class="c" accept=".jpg, .jpeg" aria-valuenow="1" data-foo="true" data-123="true" data-foo-bar="true" allowFullScreen="" download="" data-a="false"></div>'
@@ -218,14 +174,12 @@ test('properties', async function (t) {
   await t.test('should support `style`', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            h('div', {
-              style:
-                'color: /* ? */ red; background-color: blue; -webkit-border-radius: 3px; -moz-transition: initial; -ms-transition: unset'
-            }),
-            production
-          )
+        toJsxRuntime(
+          h('div', {
+            style:
+              'color: /* ? */ red; background-color: blue; -webkit-border-radius: 3px; -moz-transition: initial; -ms-transition: unset'
+          }),
+          production
         )
       ),
       '<div style="color:red;background-color:blue;-webkit-border-radius:3px;-moz-transition:initial;-ms-transition:unset"></div>'
@@ -235,17 +189,15 @@ test('properties', async function (t) {
   await t.test('should support `style` as an object', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'element',
-              tagName: 'div',
-              // @ts-expect-error: check how the runtime handles `style` as an object.
-              properties: {style: {color: 'red'}},
-              children: []
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'element',
+            tagName: 'div',
+            // @ts-expect-error: check how the runtime handles `style` as an object.
+            properties: {style: {color: 'red'}},
+            children: []
+          },
+          production
         )
       ),
       '<div style="color:red"></div>'
@@ -255,11 +207,9 @@ test('properties', async function (t) {
   await t.test('should support vendor prefixes', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            h('div', {style: '-webkit-transform: rotate(0.01turn)'}),
-            production
-          )
+        toJsxRuntime(
+          h('div', {style: '-webkit-transform: rotate(0.01turn)'}),
+          production
         )
       ),
       '<div style="-webkit-transform:rotate(0.01turn)"></div>'
@@ -269,11 +219,9 @@ test('properties', async function (t) {
   await t.test('should support CSS variables', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            h('div', {style: '--fg: #0366d6; color: var(--fg)'}),
-            production
-          )
+        toJsxRuntime(
+          h('div', {style: '--fg: #0366d6; color: var(--fg)'}),
+          production
         )
       ),
       '<div style="--fg:#0366d6;color:var(--fg)"></div>'
@@ -286,24 +234,22 @@ test('properties', async function (t) {
 
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            h('div', {
-              style:
-                '-webkit-transform:rotate(0.01turn); --fg: #0366d6; color: var(--fg); -ms-transition: unset'
-            }),
-            {
-              ...production,
-              /**
-               * @param {React.ElementType} type
-               */
-              jsx(type, props) {
-                foundProps = props
-                return production.jsx(type, {})
-              },
-              stylePropertyNameCase: 'css'
-            }
-          )
+        toJsxRuntime(
+          h('div', {
+            style:
+              '-webkit-transform:rotate(0.01turn); --fg: #0366d6; color: var(--fg); -ms-transition: unset'
+          }),
+          {
+            ...production,
+            /**
+             * @param {React.ElementType} type
+             */
+            jsx(type, props) {
+              foundProps = props
+              return production.jsx(type, {})
+            },
+            stylePropertyNameCase: 'css'
+          }
         )
       ),
       '<div></div>'
@@ -393,12 +339,10 @@ test('properties', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(h('div', {style: 'color:red; /*'}), {
-              ...production,
-              ignoreInvalidStyle: true
-            })
-          )
+          toJsxRuntime(h('div', {style: 'color:red; /*'}), {
+            ...production,
+            ignoreInvalidStyle: true
+          })
         ),
         '<div></div>'
       )
@@ -408,16 +352,14 @@ test('properties', async function (t) {
   await t.test('should support properties in the SVG space', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            s('g', {
-              colorInterpolationFilters: 'sRGB',
-              xmlSpace: 'preserve',
-              xmlnsXLink: 'http://www.w3.org/1999/xlink',
-              xLinkArcRole: 'http://www.example.com'
-            }),
-            {...production, space: 'svg'}
-          )
+        toJsxRuntime(
+          s('g', {
+            colorInterpolationFilters: 'sRGB',
+            xmlSpace: 'preserve',
+            xmlnsXLink: 'http://www.w3.org/1999/xlink',
+            xLinkArcRole: 'http://www.example.com'
+          }),
+          {...production, space: 'svg'}
         )
       ),
       '<g color-interpolation-filters="sRGB" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:arcrole="http://www.example.com"></g>'
@@ -428,31 +370,21 @@ test('properties', async function (t) {
 test('children', async function (t) {
   await t.test('should support no children', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (toJsxRuntime(h('a'), production))
-      ),
+      renderToStaticMarkup(toJsxRuntime(h('a'), production)),
       '<a></a>'
     )
   })
 
   await t.test('should support a child', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('a', [h('b')]), production)
-        )
-      ),
+      renderToStaticMarkup(toJsxRuntime(h('a', [h('b')]), production)),
       '<a><b></b></a>'
     )
   })
 
   await t.test('should support two children', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('a', [h('b'), h('c')]), production)
-        )
-      ),
+      renderToStaticMarkup(toJsxRuntime(h('a', [h('b'), h('c')]), production)),
       '<a><b></b><c></c></a>'
     )
   })
@@ -460,20 +392,18 @@ test('children', async function (t) {
   await t.test('should support svg in html', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            h('.article', [
-              s(
-                'svg',
-                {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  viewBox: [0, 0, 500, 500]
-                },
-                [s('circle', {cx: 120, cy: 120, r: 100})]
-              )
-            ]),
-            production
-          )
+        toJsxRuntime(
+          h('.article', [
+            s(
+              'svg',
+              {
+                xmlns: 'http://www.w3.org/2000/svg',
+                viewBox: [0, 0, 500, 500]
+              },
+              [s('circle', {cx: 120, cy: 120, r: 100})]
+            )
+          ]),
+          production
         )
       ),
       '<div class="article"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle cx="120" cy="120" r="100"></circle></svg></div>'
@@ -482,9 +412,7 @@ test('children', async function (t) {
 
   await t.test('should support a void element', async function () {
     assert.equal(
-      renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (toJsxRuntime(h('hr'), production))
-      ),
+      renderToStaticMarkup(toJsxRuntime(h('hr'), production)),
       '<hr/>'
     )
   })
@@ -546,21 +474,19 @@ test('components', async function (t) {
   await t.test('should support function components', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('b#x'), {
-            ...production,
-            components: {
-              /**
-               * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
-               */
-              b(props) {
-                // Note: types for this are working.
-                assert(props.id === 'x')
-                return 'a'
-              }
+        toJsxRuntime(h('b#x'), {
+          ...production,
+          components: {
+            /**
+             * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+             */
+            b(props) {
+              // Note: types for this are working.
+              assert(props.id === 'x')
+              return 'a'
             }
-          })
-        )
+          }
+        })
       ),
       'a'
     )
@@ -569,27 +495,25 @@ test('components', async function (t) {
   await t.test('should support class components', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('b#x'), {
-            ...production,
-            components: {
-              b: class extends React.Component {
-                /**
-                 * @param {React.JSX.IntrinsicElements['b']} props
-                 */
-                constructor(props) {
-                  super(props)
-                  // Note: types for this are working.
-                  assert(props.id === 'x')
-                }
+        toJsxRuntime(h('b#x'), {
+          ...production,
+          components: {
+            b: class extends React.Component {
+              /**
+               * @param {React.JSX.IntrinsicElements['b']} props
+               */
+              constructor(props) {
+                super(props)
+                // Note: types for this are working.
+                assert(props.id === 'x')
+              }
 
-                render() {
-                  return 'a'
-                }
+              render() {
+                return 'a'
               }
             }
-          })
-        )
+          }
+        })
       ),
       'a'
     )
@@ -600,21 +524,19 @@ test('components', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(h('b'), {
-              ...production,
-              passNode: true,
-              components: {
-                /**
-                 * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
-                 */
-                b(props) {
-                  assert.ok(props.node)
-                  return 'a'
-                }
+          toJsxRuntime(h('b'), {
+            ...production,
+            passNode: true,
+            components: {
+              /**
+               * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+               */
+              b(props) {
+                assert.ok(props.node)
+                return 'a'
               }
-            })
-          )
+            }
+          })
         ),
         'a'
       )
@@ -624,20 +546,18 @@ test('components', async function (t) {
   await t.test('should support components w/o `passNode`', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('b'), {
-            ...production,
-            components: {
-              /**
-               * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
-               */
-              b(props) {
-                assert.equal(props.node, undefined)
-                return 'a'
-              }
+        toJsxRuntime(h('b'), {
+          ...production,
+          components: {
+            /**
+             * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+             */
+            b(props) {
+              assert.equal(props.node, undefined)
+              return 'a'
             }
-          })
-        )
+          }
+        })
       ),
       'a'
     )
@@ -646,13 +566,11 @@ test('components', async function (t) {
   await t.test('should not pas `node` to basic components', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(h('h1', 'a'), {
-            ...production,
-            passNode: true,
-            components: {h1: 'h2'}
-          })
-        )
+        toJsxRuntime(h('h1', 'a'), {
+          ...production,
+          passNode: true,
+          components: {h1: 'h2'}
+        })
       ),
       '<h2>a</h2>'
     )
@@ -665,33 +583,31 @@ test('react specific: filter whitespace in tables', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              h(null, [
-                h('table', [
+          toJsxRuntime(
+            h(null, [
+              h('table', [
+                ' ',
+                h('thead', [
                   ' ',
-                  h('thead', [
-                    ' ',
-                    h('tr', [' ', h('th', [' ', h('b', 'a'), ' ']), ' ']),
-                    ' '
-                  ]),
-                  ' ',
-                  h('tbody', [
-                    ' ',
-                    h('tr', [' ', h('td', [' ', h('b', 'b'), ' ']), ' ']),
-                    ' '
-                  ]),
-                  ' ',
-                  h('tfoot', [
-                    ' ',
-                    h('tr', [' ', h('td', [' ', h('b', 'c'), ' ']), ' ']),
-                    ' '
-                  ]),
+                  h('tr', [' ', h('th', [' ', h('b', 'a'), ' ']), ' ']),
                   ' '
-                ])
-              ]),
-              production
-            )
+                ]),
+                ' ',
+                h('tbody', [
+                  ' ',
+                  h('tr', [' ', h('td', [' ', h('b', 'b'), ' ']), ' ']),
+                  ' '
+                ]),
+                ' ',
+                h('tfoot', [
+                  ' ',
+                  h('tr', [' ', h('td', [' ', h('b', 'c'), ' ']), ' ']),
+                  ' '
+                ]),
+                ' '
+              ])
+            ]),
+            production
           )
         ),
         '<table><thead><tr><th> <b>a</b> </th></tr></thead><tbody><tr><td> <b>b</b> </td></tr></tbody><tfoot><tr><td> <b>c</b> </td></tr></tfoot></table>'
@@ -713,9 +629,7 @@ test('react specific: `align` to `style`', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(tree, {...production, tableCellAlignToStyle: false})
-          )
+          toJsxRuntime(tree, {...production, tableCellAlignToStyle: false})
         ),
         '<th style="color:red" align="center">alpha</th><td style="background-color:blue" align="left">bravo</td><td align="right">charlie</td><td>delta</td>'
       )
@@ -726,9 +640,7 @@ test('react specific: `align` to `style`', async function (t) {
     'should transform `align` w/o `tableCellAlignToStyle`',
     async function () {
       assert.equal(
-        renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (toJsxRuntime(tree, production))
-        ),
+        renderToStaticMarkup(toJsxRuntime(tree, production)),
         '<th style="color:red;text-align:center">alpha</th><td style="background-color:blue;text-align:left">bravo</td><td style="text-align:right">charlie</td><td>delta</td>'
       )
     }
@@ -742,19 +654,17 @@ test('react specific: `align` to `style`', async function (t) {
 
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(h('td', {align: 'center'}), {
-              ...production,
-              /**
-               * @param {React.ElementType} type
-               */
-              jsx(type, props) {
-                foundProps = props
-                return production.jsx(type, {})
-              },
-              stylePropertyNameCase: 'css'
-            })
-          )
+          toJsxRuntime(h('td', {align: 'center'}), {
+            ...production,
+            /**
+             * @param {React.ElementType} type
+             */
+            jsx(type, props) {
+              foundProps = props
+              return production.jsx(type, {})
+            },
+            stylePropertyNameCase: 'css'
+          })
         ),
         '<td></td>'
       )
@@ -771,19 +681,17 @@ test('react specific: `align` to `style`', async function (t) {
 
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(h('td', {align: 'center'}), {
-              ...production,
-              /**
-               * @param {React.ElementType} type
-               */
-              jsx(type, props) {
-                foundProps = props
-                return production.jsx(type, {})
-              },
-              stylePropertyNameCase: 'dom'
-            })
-          )
+          toJsxRuntime(h('td', {align: 'center'}), {
+            ...production,
+            /**
+             * @param {React.ElementType} type
+             */
+            jsx(type, props) {
+              foundProps = props
+              return production.jsx(type, {})
+            },
+            stylePropertyNameCase: 'dom'
+          })
         ),
         '<td></td>'
       )
@@ -797,16 +705,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (text)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: 'a',
-              attributes: [],
-              children: []
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'a',
+            attributes: [],
+            children: []
+          },
+          production
         )
       ),
       '<a></a>'
@@ -816,16 +722,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (flow)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: 'h1',
-              attributes: [],
-              children: []
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'h1',
+            attributes: [],
+            children: []
+          },
+          production
         )
       ),
       '<h1></h1>'
@@ -835,16 +739,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (fragment)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: null,
-              attributes: [],
-              children: [{type: 'text', value: 'a'}]
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: null,
+            attributes: [],
+            children: [{type: 'text', value: 'a'}]
+          },
+          production
         )
       ),
       'a'
@@ -854,16 +756,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (fragment)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: null,
-              attributes: [],
-              children: []
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: null,
+            attributes: [],
+            children: []
+          },
+          production
         )
       ),
       ''
@@ -875,18 +775,16 @@ test('mdx: jsx', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'mdxJsxTextElement',
-                name: 'a',
-                attributes: [
-                  {type: 'mdxJsxAttribute', name: 'hidden', value: null}
-                ],
-                children: []
-              },
-              production
-            )
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {type: 'mdxJsxAttribute', name: 'hidden', value: null}
+              ],
+              children: []
+            },
+            production
           )
         ),
         '<a hidden=""></a>'
@@ -899,16 +797,14 @@ test('mdx: jsx', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'mdxJsxTextElement',
-                name: 'a',
-                attributes: [{type: 'mdxJsxAttribute', name: 'x', value: 'y'}],
-                children: []
-              },
-              production
-            )
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [{type: 'mdxJsxAttribute', name: 'x', value: 'y'}],
+              children: []
+            },
+            production
           )
         ),
         '<a x="y"></a>'
@@ -919,23 +815,21 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (SVG)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: 'svg',
-              attributes: [],
-              children: [
-                s('g', {
-                  colorInterpolationFilters: 'sRGB',
-                  xmlSpace: 'preserve',
-                  xmlnsXLink: 'http://www.w3.org/1999/xlink',
-                  xLinkArcRole: 'http://www.example.com'
-                })
-              ]
-            },
-            production
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'svg',
+            attributes: [],
+            children: [
+              s('g', {
+                colorInterpolationFilters: 'sRGB',
+                xmlSpace: 'preserve',
+                xmlnsXLink: 'http://www.w3.org/1999/xlink',
+                xLinkArcRole: 'http://www.example.com'
+              })
+            ]
+          },
+          production
         )
       ),
       '<svg><g color-interpolation-filters="sRGB" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:arcrole="http://www.example.com"></g></svg>'
@@ -945,16 +839,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (literal)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: 'a',
-              attributes: [],
-              children: []
-            },
-            {...production, components: {a: 'b'}}
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'a',
+            attributes: [],
+            children: []
+          },
+          {...production, components: {a: 'b'}}
         )
       ),
       '<b></b>'
@@ -964,16 +856,14 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (namespace)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'mdxJsxTextElement',
-              name: 'a:b',
-              attributes: [],
-              children: []
-            },
-            {...production, components: {'a:b': 'b'}}
-          )
+        toJsxRuntime(
+          {
+            type: 'mdxJsxTextElement',
+            name: 'a:b',
+            attributes: [],
+            children: []
+          },
+          {...production, components: {'a:b': 'b'}}
         )
       ),
       '<b></b>'
@@ -997,14 +887,66 @@ test('mdx: jsx', async function (t) {
   await t.test('should transform MDX JSX (component)', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
+        toJsxRuntime(
+          {
+            type: 'root',
+            children: [
+              {
+                type: 'mdxjsEsm',
+                value: "export const A = 'b'",
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExportNamedDeclaration',
+                        declaration: {
+                          type: 'VariableDeclaration',
+                          declarations: [
+                            {
+                              type: 'VariableDeclarator',
+                              id: {type: 'Identifier', name: 'A'},
+                              init: {type: 'Literal', value: 'b'}
+                            }
+                          ],
+                          kind: 'const'
+                        },
+                        specifiers: [],
+                        source: null
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
+                  }
+                }
+              },
+              {
+                type: 'mdxJsxFlowElement',
+                name: 'A',
+                attributes: [],
+                children: []
+              }
+            ]
+          },
+          {...production, createEvaluater}
+        )
+      ),
+      '<b></b>'
+    )
+  })
+
+  await t.test(
+    'should transform MDX JSX (member expression, non-identifier)',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
           toJsxRuntime(
             {
               type: 'root',
               children: [
                 {
                   type: 'mdxjsEsm',
-                  value: "export const A = 'b'",
+                  value: "export const a = {'b-c': 'c'}",
                   data: {
                     estree: {
                       type: 'Program',
@@ -1016,8 +958,21 @@ test('mdx: jsx', async function (t) {
                             declarations: [
                               {
                                 type: 'VariableDeclarator',
-                                id: {type: 'Identifier', name: 'A'},
-                                init: {type: 'Literal', value: 'b'}
+                                id: {type: 'Identifier', name: 'a'},
+                                init: {
+                                  type: 'ObjectExpression',
+                                  properties: [
+                                    {
+                                      type: 'Property',
+                                      method: false,
+                                      shorthand: false,
+                                      computed: false,
+                                      key: {type: 'Literal', value: 'b-c'},
+                                      value: {type: 'Literal', value: 'c'},
+                                      kind: 'init'
+                                    }
+                                  ]
+                                }
                               }
                             ],
                             kind: 'const'
@@ -1033,82 +988,13 @@ test('mdx: jsx', async function (t) {
                 },
                 {
                   type: 'mdxJsxFlowElement',
-                  name: 'A',
+                  name: 'a.b-c',
                   attributes: [],
                   children: []
                 }
               ]
             },
             {...production, createEvaluater}
-          )
-        )
-      ),
-      '<b></b>'
-    )
-  })
-
-  await t.test(
-    'should transform MDX JSX (member expression, non-identifier)',
-    async function () {
-      assert.equal(
-        renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'root',
-                children: [
-                  {
-                    type: 'mdxjsEsm',
-                    value: "export const a = {'b-c': 'c'}",
-                    data: {
-                      estree: {
-                        type: 'Program',
-                        body: [
-                          {
-                            type: 'ExportNamedDeclaration',
-                            declaration: {
-                              type: 'VariableDeclaration',
-                              declarations: [
-                                {
-                                  type: 'VariableDeclarator',
-                                  id: {type: 'Identifier', name: 'a'},
-                                  init: {
-                                    type: 'ObjectExpression',
-                                    properties: [
-                                      {
-                                        type: 'Property',
-                                        method: false,
-                                        shorthand: false,
-                                        computed: false,
-                                        key: {type: 'Literal', value: 'b-c'},
-                                        value: {type: 'Literal', value: 'c'},
-                                        kind: 'init'
-                                      }
-                                    ]
-                                  }
-                                }
-                              ],
-                              kind: 'const'
-                            },
-                            specifiers: [],
-                            source: null
-                          }
-                        ],
-                        sourceType: 'module',
-                        comments: []
-                      }
-                    }
-                  },
-                  {
-                    type: 'mdxJsxFlowElement',
-                    name: 'a.b-c',
-                    attributes: [],
-                    children: []
-                  }
-                ]
-              },
-              {...production, createEvaluater}
-            )
           )
         ),
         '<c></c>'
@@ -1161,55 +1047,53 @@ test('mdx: jsx', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'mdxJsxTextElement',
-                name: 'a',
-                attributes: [
-                  {
-                    type: 'mdxJsxExpressionAttribute',
-                    value: "...{x: 'y'}",
-                    data: {
-                      estree: {
-                        type: 'Program',
-                        body: [
-                          {
-                            type: 'ExpressionStatement',
-                            expression: {
-                              type: 'ObjectExpression',
-                              properties: [
-                                {
-                                  type: 'SpreadElement',
-                                  argument: {
-                                    type: 'ObjectExpression',
-                                    properties: [
-                                      {
-                                        type: 'Property',
-                                        method: false,
-                                        shorthand: false,
-                                        computed: false,
-                                        key: {type: 'Identifier', name: 'x'},
-                                        value: {type: 'Literal', value: 'y'},
-                                        kind: 'init'
-                                      }
-                                    ]
-                                  }
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {
+                  type: 'mdxJsxExpressionAttribute',
+                  value: "...{x: 'y'}",
+                  data: {
+                    estree: {
+                      type: 'Program',
+                      body: [
+                        {
+                          type: 'ExpressionStatement',
+                          expression: {
+                            type: 'ObjectExpression',
+                            properties: [
+                              {
+                                type: 'SpreadElement',
+                                argument: {
+                                  type: 'ObjectExpression',
+                                  properties: [
+                                    {
+                                      type: 'Property',
+                                      method: false,
+                                      shorthand: false,
+                                      computed: false,
+                                      key: {type: 'Identifier', name: 'x'},
+                                      value: {type: 'Literal', value: 'y'},
+                                      kind: 'init'
+                                    }
+                                  ]
                                 }
-                              ]
-                            }
+                              }
+                            ]
                           }
-                        ],
-                        sourceType: 'module',
-                        comments: []
-                      }
+                        }
+                      ],
+                      sourceType: 'module',
+                      comments: []
                     }
                   }
-                ],
-                children: []
-              },
-              {...production, createEvaluater}
-            )
+                }
+              ],
+              children: []
+            },
+            {...production, createEvaluater}
           )
         ),
         '<a x="y"></a>'
@@ -1222,38 +1106,36 @@ test('mdx: jsx', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'mdxJsxTextElement',
-                name: 'a',
-                attributes: [
-                  {
-                    type: 'mdxJsxAttribute',
-                    name: 'x',
-                    value: {
-                      type: 'mdxJsxAttributeValueExpression',
-                      value: "'y'",
-                      data: {
-                        estree: {
-                          type: 'Program',
-                          body: [
-                            {
-                              type: 'ExpressionStatement',
-                              expression: {type: 'Literal', value: 'y'}
-                            }
-                          ],
-                          sourceType: 'module',
-                          comments: []
-                        }
+          toJsxRuntime(
+            {
+              type: 'mdxJsxTextElement',
+              name: 'a',
+              attributes: [
+                {
+                  type: 'mdxJsxAttribute',
+                  name: 'x',
+                  value: {
+                    type: 'mdxJsxAttributeValueExpression',
+                    value: "'y'",
+                    data: {
+                      estree: {
+                        type: 'Program',
+                        body: [
+                          {
+                            type: 'ExpressionStatement',
+                            expression: {type: 'Literal', value: 'y'}
+                          }
+                        ],
+                        sourceType: 'module',
+                        comments: []
                       }
                     }
                   }
-                ],
-                children: []
-              },
-              {...production, createEvaluater}
-            )
+                }
+              ],
+              children: []
+            },
+            {...production, createEvaluater}
           )
         ),
         '<a x="y"></a>'
@@ -1274,27 +1156,25 @@ test('mdx: expression', async function (t) {
     async function () {
       assert.equal(
         renderToStaticMarkup(
-          /** @type {React.JSX.Element} */ (
-            toJsxRuntime(
-              {
-                type: 'mdxFlowExpression',
-                value: "'a'",
-                data: {
-                  estree: {
-                    type: 'Program',
-                    body: [
-                      {
-                        type: 'ExpressionStatement',
-                        expression: {type: 'Literal', value: 'a'}
-                      }
-                    ],
-                    sourceType: 'module',
-                    comments: []
-                  }
+          toJsxRuntime(
+            {
+              type: 'mdxFlowExpression',
+              value: "'a'",
+              data: {
+                estree: {
+                  type: 'Program',
+                  body: [
+                    {
+                      type: 'ExpressionStatement',
+                      expression: {type: 'Literal', value: 'a'}
+                    }
+                  ],
+                  sourceType: 'module',
+                  comments: []
                 }
-              },
-              {...production, createEvaluater}
-            )
+              }
+            },
+            {...production, createEvaluater}
           )
         ),
         'a'
@@ -1316,61 +1196,59 @@ test('mdx: ESM', async function (t) {
   await t.test('should support ESM w/ `createEvaluater`', async function () {
     assert.equal(
       renderToStaticMarkup(
-        /** @type {React.JSX.Element} */ (
-          toJsxRuntime(
-            {
-              type: 'root',
-              children: [
-                {
-                  type: 'mdxjsEsm',
-                  value: "export const a = 'b'",
-                  data: {
-                    estree: {
-                      type: 'Program',
-                      body: [
-                        {
-                          type: 'ExportNamedDeclaration',
-                          declaration: {
-                            type: 'VariableDeclaration',
-                            declarations: [
-                              {
-                                type: 'VariableDeclarator',
-                                id: {type: 'Identifier', name: 'a'},
-                                init: {type: 'Literal', value: 'b'}
-                              }
-                            ],
-                            kind: 'const'
-                          },
-                          specifiers: [],
-                          source: null
-                        }
-                      ],
-                      sourceType: 'module',
-                      comments: []
-                    }
-                  }
-                },
-                {
-                  type: 'mdxFlowExpression',
-                  value: 'a',
-                  data: {
-                    estree: {
-                      type: 'Program',
-                      body: [
-                        {
-                          type: 'ExpressionStatement',
-                          expression: {type: 'Identifier', name: 'a'}
-                        }
-                      ],
-                      sourceType: 'module',
-                      comments: []
-                    }
+        toJsxRuntime(
+          {
+            type: 'root',
+            children: [
+              {
+                type: 'mdxjsEsm',
+                value: "export const a = 'b'",
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExportNamedDeclaration',
+                        declaration: {
+                          type: 'VariableDeclaration',
+                          declarations: [
+                            {
+                              type: 'VariableDeclarator',
+                              id: {type: 'Identifier', name: 'a'},
+                              init: {type: 'Literal', value: 'b'}
+                            }
+                          ],
+                          kind: 'const'
+                        },
+                        specifiers: [],
+                        source: null
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
                   }
                 }
-              ]
-            },
-            {...production, createEvaluater}
-          )
+              },
+              {
+                type: 'mdxFlowExpression',
+                value: 'a',
+                data: {
+                  estree: {
+                    type: 'Program',
+                    body: [
+                      {
+                        type: 'ExpressionStatement',
+                        expression: {type: 'Identifier', name: 'a'}
+                      }
+                    ],
+                    sourceType: 'module',
+                    comments: []
+                  }
+                }
+              }
+            ]
+          },
+          {...production, createEvaluater}
         )
       ),
       'b'
