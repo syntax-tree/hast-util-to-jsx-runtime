@@ -17,7 +17,7 @@
     "mdast-util-mdxjs-esm": "^2.0.0",
     "property-information": "^7.0.0",
     "space-separated-tokens": "^2.0.0",
-    "style-to-object": "^1.0.0",
+    "style-to-js": "^1.0.0",
     "unist-util-position": "^5.0.0",
     "vfile-message": "^4.0.0"
   },
