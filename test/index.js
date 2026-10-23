@@ -266,6 +266,40 @@ test('properties', async function (t) {
   })
 
   await t.test(
+    'should not share style objects between elements',
+    async function () {
+      /** @type {Array<unknown>} */
+      const styles = []
+
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            h(null, [
+              h('b', {style: 'color: red'}),
+              h('i', {style: 'color: red'}),
+              h('u', {style: 'color: red'})
+            ]),
+            {
+              ...production,
+              /**
+               * @param {React.ElementType} type
+               */
+              jsx(type, props) {
+                styles.push(props.style)
+                return production.jsx(type, {})
+              }
+            }
+          )
+        ),
+        '<b></b><i></i><u></u>'
+      )
+
+      assert.deepEqual(styles, [{color: 'red'}, {color: 'red'}, {color: 'red'}])
+      assert.equal(new Set(styles).size, 3)
+    }
+  )
+
+  await t.test(
     'should crash on invalid style strings (default)',
     async function () {
       assert.throws(function () {
@@ -642,6 +676,24 @@ test('react specific: `align` to `style`', async function (t) {
       assert.equal(
         renderToStaticMarkup(toJsxRuntime(tree, production)),
         '<th style="color:red;text-align:center">alpha</th><td style="background-color:blue;text-align:left">bravo</td><td style="text-align:right">charlie</td><td>delta</td>'
+      )
+    }
+  )
+
+  await t.test(
+    'should not add `align` to other cells w/ the same `style`',
+    async function () {
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            h(null, [
+              h('td', {style: 'color:red', align: 'center'}, 'alpha'),
+              h('td', {style: 'color:red'}, 'bravo')
+            ]),
+            production
+          )
+        ),
+        '<td style="color:red;text-align:center">alpha</td><td style="color:red">bravo</td>'
       )
     }
   )

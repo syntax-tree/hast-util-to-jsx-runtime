@@ -418,6 +418,10 @@ export interface State {
    */
   schema: Schema
   /**
+   * Parsed `style` attributes, by value.
+   */
+  styleCache: Map<string, Style>
+  /**
    * Casing to use for property names in `style` objects.
    */
   stylePropertyNameCase: StylePropertyNameCase
