@@ -266,6 +266,38 @@ test('properties', async function (t) {
   })
 
   await t.test(
+    'should keep the casing of CSS variables in CSS cased style objects',
+    async function () {
+      /** @type {unknown} */
+      let foundProps
+
+      assert.equal(
+        renderToStaticMarkup(
+          toJsxRuntime(
+            h('div', {style: '--fgColor: #0366d6; color: var(--fgColor)'}),
+            {
+              ...production,
+              /**
+               * @param {React.ElementType} type
+               */
+              jsx(type, props) {
+                foundProps = props
+                return production.jsx(type, {})
+              },
+              stylePropertyNameCase: 'css'
+            }
+          )
+        ),
+        '<div></div>'
+      )
+
+      assert.deepEqual(foundProps, {
+        style: {'--fgColor': '#0366d6', color: 'var(--fgColor)'}
+      })
+    }
+  )
+
+  await t.test(
     'should crash on invalid style strings (default)',
     async function () {
       assert.throws(function () {
