@@ -11,7 +11,8 @@
     // Needed because `@types/react-dom` is currently broken.
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    "types": ["node"]
   },
   "exclude": ["coverage/", "node_modules/"],
   "include": ["**/**.js", "lib/types.d.ts", "index.d.ts", "types-esmsh.d.ts"]

@@ -8,15 +8,11 @@ import test from 'node:test'
 import {visit} from 'estree-util-visit'
 import {h, s} from 'hastscript'
 import {toJsxRuntime} from 'hast-util-to-jsx-runtime'
-import * as sval from 'sval'
+import Sval from 'sval'
 import {renderToStaticMarkup} from 'react-dom/server'
 import * as development from 'react/jsx-dev-runtime'
 import * as production from 'react/jsx-runtime'
 import React from 'react'
-
-/** @type {import('sval')['default']} */
-// @ts-expect-error: ESM types are wrong.
-const Sval = sval.default
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
@@ -242,7 +238,12 @@ test('properties', async function (t) {
           {
             ...production,
             /**
+             * Create an element.
+             *
              * @param {React.ElementType} type
+             *   Type.
+             * @param props
+             *   Props.
              */
             jsx(type, props) {
               foundProps = props
@@ -420,7 +421,7 @@ test('children', async function (t) {
 
 test('source', async function (t) {
   await t.test('should not add a source in production', async function () {
-    assert.deepEqual(
+    assert.equal(
       getSource(
         toJsxRuntime(
           {
@@ -438,7 +439,7 @@ test('source', async function (t) {
   })
 
   await t.test('should add a source in development', async function () {
-    assert.deepEqual(
+    assert.equal(
       getSource(
         toJsxRuntime(
           {
@@ -460,8 +461,12 @@ test('source', async function (t) {
   })
 
   /**
+   * Get the source info of an element.
+   *
    * @param {unknown} node
+   *   Element.
    * @returns {Source | undefined}
+   *   Source info, if any.
    */
   function getSource(node) {
     // @ts-expect-error: `_source` is not typed by react but does exist.
@@ -478,7 +483,10 @@ test('components', async function (t) {
           ...production,
           components: {
             /**
+             * Component.
+             *
              * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+             *   Props.
              */
             b(props) {
               // Note: types for this are working.
@@ -500,7 +508,10 @@ test('components', async function (t) {
           components: {
             b: class extends React.Component {
               /**
+               * Component.
+               *
                * @param {React.JSX.IntrinsicElements['b']} props
+               *   Props.
                */
               constructor(props) {
                 super(props)
@@ -529,7 +540,10 @@ test('components', async function (t) {
             passNode: true,
             components: {
               /**
+               * Component.
+               *
                * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+               *   Props.
                */
               b(props) {
                 assert.ok(props.node)
@@ -550,7 +564,10 @@ test('components', async function (t) {
           ...production,
           components: {
             /**
+             * Component.
+             *
              * @param {React.JSX.IntrinsicElements['b'] & ExtraProps} props
+             *   Props.
              */
             b(props) {
               assert.equal(props.node, undefined)
@@ -657,7 +674,12 @@ test('react specific: `align` to `style`', async function (t) {
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
             /**
+             * Create an element.
+             *
              * @param {React.ElementType} type
+             *   Type.
+             * @param props
+             *   Props.
              */
             jsx(type, props) {
               foundProps = props
@@ -684,7 +706,12 @@ test('react specific: `align` to `style`', async function (t) {
           toJsxRuntime(h('td', {align: 'center'}), {
             ...production,
             /**
+             * Create an element.
+             *
              * @param {React.ElementType} type
+             *   Type.
+             * @param props
+             *   Props.
              */
             jsx(type, props) {
               foundProps = props
@@ -912,7 +939,8 @@ test('mdx: jsx', async function (t) {
                           kind: 'const'
                         },
                         specifiers: [],
-                        source: null
+                        source: null,
+                        attributes: []
                       }
                     ],
                     sourceType: 'module',
@@ -978,7 +1006,8 @@ test('mdx: jsx', async function (t) {
                             kind: 'const'
                           },
                           specifiers: [],
-                          source: null
+                          source: null,
+                          attributes: []
                         }
                       ],
                       sourceType: 'module',
@@ -1221,7 +1250,8 @@ test('mdx: ESM', async function (t) {
                           kind: 'const'
                         },
                         specifiers: [],
-                        source: null
+                        source: null,
+                        attributes: []
                       }
                     ],
                     sourceType: 'module',
@@ -1257,6 +1287,8 @@ test('mdx: ESM', async function (t) {
 })
 
 /**
+ * Create an evaluater.
+ *
  * @type {CreateEvaluater}
  */
 function createEvaluater() {
@@ -1301,7 +1333,12 @@ function createEvaluater() {
       return value
     },
     /**
+     * Evaluate a program.
+     *
+     * @param program
+     *   Program.
      * @returns {undefined}
+     *   Nothing.
      */
     evaluateProgram(program) {
       visit(program, function (node, key, index, parents) {

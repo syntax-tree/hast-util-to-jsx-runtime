@@ -4,8 +4,6 @@
  * > 👉 **Note**: this file is actual ESM that runs in browsers.
  */
 
-/* eslint-env browser */
-
 // To do: note: update this once in a while.
 import {h, s} from 'https://esm.sh/hastscript@9?dev'
 

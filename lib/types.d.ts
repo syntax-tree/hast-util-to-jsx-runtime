@@ -39,8 +39,7 @@ export type Components = {
  *   Props type.
  */
 type Component<ComponentProps> =
-  | ClassComponent<ComponentProps>
-  | FunctionComponent<ComponentProps>
+  ClassComponent<ComponentProps> | FunctionComponent<ComponentProps>
 
 /**
  * Create an evaluator that turns ESTree ASTs from embedded MDX into values.
