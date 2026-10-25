@@ -567,8 +567,8 @@ do:
 ```js
 import {h} from 'https://esm.sh/hastscript@9'
 import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
-import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@10/jsx-runtime'
-import {render} from 'https://esm.sh/preact@10'
+import {Fragment, jsx, jsxs} from 'https://esm.sh/preact@11/jsx-runtime'
+import {render} from 'https://esm.sh/preact@11'
 
 render(
   toJsxRuntime(h('h1', 'hi!'), {
