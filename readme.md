@@ -73,12 +73,6 @@ install with [npm][npmjs-install]:
 npm install hast-util-to-jsx-runtime
 ```
 
-In Deno with [`esm.sh`][esmsh]:
-
-```js
-import {toJsxRuntime} from 'https://esm.sh/hast-util-to-jsx-runtime@2'
-```
-
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
