@@ -173,7 +173,7 @@ test('properties', async function (t) {
         toJsxRuntime(
           h('div', {
             style:
-              'color: /* ? */ red; background-color: blue; -webkit-border-radius: 3px; -moz-transition: initial; -ms-transition: unset'
+              'color: /* ? */ red; Background-Color: blue; -webkit-border-radius: 3px; -moz-transition: initial; -Ms-Transition: unset'
           }),
           production
         )
@@ -225,46 +225,53 @@ test('properties', async function (t) {
   })
 
   await t.test('should support CSS cased style objects', async function () {
-    /** @type {unknown} */
-    let foundProps
-
-    assert.equal(
-      renderToStaticMarkup(
-        toJsxRuntime(
-          h('div', {
-            style:
-              '-webkit-transform:rotate(0.01turn); --fg: #0366d6; color: var(--fg); -ms-transition: unset'
-          }),
-          {
-            ...production,
-            /**
-             * Create an element.
-             *
-             * @param {React.ElementType} type
-             *   Type.
-             * @param props
-             *   Props.
-             */
-            jsx(type, props) {
-              foundProps = props
-              return production.jsx(type, {})
-            },
-            stylePropertyNameCase: 'css'
-          }
-        )
-      ),
-      '<div></div>'
-    )
-
-    assert.deepEqual(foundProps, {
-      style: {
+    assert.deepEqual(
+      toJsxRuntime(
+        h('div', {
+          style:
+            '-webkit-transform:rotate(0.01turn); --fg: #0366d6; color: var(--fg); -ms-transition: unset; --fgColor: red; Background-Color: var(--fgColor)'
+        }),
+        {...production, stylePropertyNameCase: 'css'}
+      ).props.style,
+      {
         '-webkit-transform': 'rotate(0.01turn)',
         '--fg': '#0366d6',
         color: 'var(--fg)',
-        '-ms-transition': 'unset'
+        '-ms-transition': 'unset',
+        '--fgColor': 'red',
+        'background-color': 'var(--fgColor)'
       }
-    })
+    )
   })
+
+  await t.test(
+    'should support CSS cased style objects (`style` as an object)',
+    async function () {
+      assert.deepEqual(
+        toJsxRuntime(
+          {
+            type: 'element',
+            tagName: 'div',
+            properties: {
+              // @ts-expect-error: check how the runtime handles `style` as an object.
+              style: {
+                msTransition: 'unset',
+                '--fgColor': 'red',
+                backgroundColor: 'var(--fgColor)'
+              }
+            },
+            children: []
+          },
+          {...production, stylePropertyNameCase: 'css'}
+        ).props.style,
+        {
+          '-ms-transition': 'unset',
+          '--fgColor': 'red',
+          'background-color': 'var(--fgColor)'
+        }
+      )
+    }
+  )
 
   await t.test(
     'should crash on invalid style strings (default)',
