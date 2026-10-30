@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node:
-          - lts/jod
+          - lts/krypton
           - node
 name: main
 on:
