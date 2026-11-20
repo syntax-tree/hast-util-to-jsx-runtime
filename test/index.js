@@ -1178,6 +1178,77 @@ test('mdx: jsx', async function (t) {
       )
     }
   )
+  await t.test(
+    'should copy spread attributes using object spread semantics',
+    async function () {
+      /** @type {Record<string, unknown>} */
+      const data = JSON.parse(
+        '{"__proto__":{"polluted":true},"middle":"spread"}'
+      )
+      const symbol = Symbol('spread')
+      Object.defineProperty(data, symbol, {value: 'symbol', enumerable: true})
+      /** @type {Record<string, unknown>} */
+      const expected = {before: 'before', ...data, after: 'after'}
+      const element = toJsxRuntime(
+        {
+          type: 'mdxJsxTextElement',
+          name: 'a',
+          attributes: [
+            {type: 'mdxJsxAttribute', name: 'before', value: 'before'},
+            {
+              type: 'mdxJsxExpressionAttribute',
+              value: '...data',
+              data: {
+                estree: {
+                  type: 'Program',
+                  body: [
+                    {
+                      type: 'ExpressionStatement',
+                      expression: {
+                        type: 'ObjectExpression',
+                        properties: [
+                          {
+                            type: 'SpreadElement',
+                            argument: {type: 'Identifier', name: 'data'}
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  sourceType: 'module',
+                  comments: []
+                }
+              }
+            },
+            {type: 'mdxJsxAttribute', name: 'after', value: 'after'}
+          ],
+          children: []
+        },
+        {
+          ...production,
+          createEvaluater() {
+            return {
+              evaluateExpression() {
+                return data
+              },
+              evaluateProgram() {}
+            }
+          }
+        }
+      )
+
+      assert.equal(
+        Object.getPrototypeOf(element.props),
+        Object.getPrototypeOf({})
+      )
+      assert.equal(Object.hasOwn(element.props, '__proto__'), true)
+      assert.deepEqual(element.props, expected)
+      assert.deepEqual(
+        Reflect.ownKeys(element.props),
+        Reflect.ownKeys(expected)
+      )
+    }
+  )
 })
 
 test('mdx: expression', async function (t) {
